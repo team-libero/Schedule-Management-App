@@ -8,6 +8,8 @@ public class RiberoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(RiberoApplication.class, args);
+
+		//test
 	}
 
 }
