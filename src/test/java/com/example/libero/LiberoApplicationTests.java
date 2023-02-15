@@ -1,10 +1,10 @@
-package com.example.ribero;
+package com.act.libero;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class RiberoApplicationTests {
+class LiberoApplicationTests {
 
 	@Test
 	void contextLoads() {

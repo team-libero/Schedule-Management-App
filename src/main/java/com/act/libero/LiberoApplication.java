@@ -1,13 +1,13 @@
-package com.example.ribero;
+package com.act.libero;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RiberoApplication {
+public class LiberoApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(RiberoApplication.class, args);
+		SpringApplication.run(LiberoApplication.class, args);
 
 		//test
 	}
