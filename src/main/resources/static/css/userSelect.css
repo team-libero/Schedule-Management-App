@@ -136,3 +136,9 @@ input[type="button"]{
     margin-top: 3%;
     margin-right: 3%;
 }
+
+.form_box {
+    display: flex;
+    padding: 0px 2vw;
+    justify-content: right;
+}

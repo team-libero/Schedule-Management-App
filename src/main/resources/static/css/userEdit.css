@@ -94,3 +94,9 @@ input[type="button"]{
     color: red;
     font-size: 4vw;
 }
+
+.form_box {
+    display: flex;
+    padding: 0px 2vw;
+    justify-content: right;
+}
