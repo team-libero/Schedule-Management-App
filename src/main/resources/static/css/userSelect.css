@@ -1,0 +1,138 @@
+body{
+    background-color: #f1db83;
+    /*display: flex;
+    justify-content: center;*/
+}
+
+form {
+    font-size: 5vw;
+}
+
+#title{
+    font-weight: bold;
+    color: #6c3800;
+    margin-bottom: 2vw;
+    margin-top: 2vw;
+    display: grid;
+    place-items: center;
+}
+
+#userRegister{
+    font-size: 4vw;
+    border-collapse: collapse;
+    border-top: 0.5vw solid #f1db83;
+    border-bottom: 0.5vw solid #f1db83;
+    border-width: 3px;
+    width: 80vw;
+    height: 15vw;
+    margin: auto;
+}
+
+#register-left{
+    width: 30%;
+    background-color: #fbebaa;
+    padding-left: 2%;
+    border-collapse: collapse;
+    border-top: 0.5vw solid #f1db83;
+    border-bottom: 0.5vw solid #f1db83;
+    border-width: 3px;
+    text-align: center;
+    font-weight: bold;
+}
+
+#register-right{
+    width: auto;
+    background-color: #fcf3e0;
+    padding-left: 2%;
+    border-collapse: collapse;
+    border-top: 0.5vw solid #f1db83;
+    border-bottom: 0.5vw solid #f1db83;
+    border-left: 0.5vw solid #f1db83;
+    border-width: 3px;
+}
+
+#userSelectTable{
+    font-size: 4vw;
+    border-collapse: collapse;
+    border-top: 0.5vw solid #f1db83;
+    border-bottom: 0.5vw solid #f1db83;
+    border-width: 3px;
+    width: 100vw;
+    height: auto;
+    margin: auto;
+}
+
+#table-left{
+    width: 10%;
+    background-color: #fcf3e0;
+    padding-left: 2%;
+    border-collapse: collapse;
+    border-top: 0.5vw solid #f1db83;
+    border-bottom: 0.5vw solid #f1db83;
+    border-width: 3px;
+    text-align: center;
+}
+
+#table-center{
+    white-space: nowrap;
+    width: 40%;
+    background-color: #fcf3e0;
+    border-collapse: collapse;
+    border-top: 0.5vw solid #f1db83;
+    border-bottom: 0.5vw solid #f1db83;
+    border-right: 0.5vw solid #f1db83;
+    border-left: 0.5vw solid #f1db83;
+    border-width: 3px;
+    padding-left: 2%;
+}
+
+#table-right{
+    width: 40%;
+    background-color: #fcf3e0;
+    padding-left: 2%;
+    border-collapse: collapse;
+    border-top: 0.5vw solid #f1db83;
+    border-bottom: 0.5vw solid #f1db83;
+    border-left: 0.5vw solid #f1db83;
+    border-width: 3px;
+}
+
+#userSelectTableHead{
+    height: 10vw;
+    background-color: #fbebaa;
+}
+
+#userSelectTableContent{
+    height: 15vw;
+}
+
+#head-center{
+    border-collapse: collapse;
+    border-top: 0.5vw solid #f1db83;
+    border-bottom: 0.5vw solid #f1db83;
+    border-left: 0.5vw solid #f1db83;
+    border-right: 0.5vw solid #f1db83;
+    border-width: 3px;
+}
+
+input[type="radio"]{
+    transform:scale(3.0);
+    margin-right: 1.5vw;
+}
+
+#edit,#delete,#register{
+    float: right;
+}
+
+input[type="button"]{
+    background-color: orange;
+    width: 20%;
+    height: 5%;
+    border-radius: 15px;
+    border-width: 3px;
+    color: white;
+    font-weight: bold;
+    font-size: 4vw;
+    margin-top: 3%;
+    margin-right: 3%;
+}

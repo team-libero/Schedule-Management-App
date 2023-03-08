@@ -1,0 +1,142 @@
+
+/* ================================================
+body
+================================================ */
+body {
+    background-color: #f1db83;
+    user-select: none;
+    /*padding: 1.0em 2.0em;
+    /* margin: 2em 0; */
+    /* background: #FFF;
+    border: solid 4px #6091d3; 
+    border: solid 10px #ff8400;
+    border-radius: 120px;*/
+}
+
+form {
+    font-size: 6vw;
+}
+
+/* ================================================
+header
+================================================ */
+.button-left {
+    float :  left;
+}
+
+.button-right {
+    float :  right;
+}
+
+.header-button {
+    padding: 0;
+    border: none;
+    background: transparent;
+}
+  
+button img {
+    width : 80px;
+    height : 80px;
+    margin: 50px;
+}
+
+/* ================================================
+main
+================================================ */
+table {
+    width : 100%;
+    height : 40%;
+    border-collapse: separate;
+    border-spacing: 20px 45px;
+    word-break: break-all; /*テーブル幅で文字改行*/
+} 
+
+td img {
+    width : 80px;
+    height : 80px;
+}
+
+.schedule-title {
+    font-size: 90px;
+}
+
+.schedule-clock {
+    font-size: 50px;
+}
+
+.schedule-address {
+    font-size: 50px;
+}
+
+.schedule-memo {
+    font-size: 50px;
+}
+
+.schedule-person {
+    font-size: 50px;
+}
+
+.schedule-section {
+    font-size: 50px;
+    text-align:right;
+}
+
+
+/* ================================================
+モーダル画面
+================================================ */
+.modal_box{
+    display: flex;
+    justify-content: center;
+}
+
+#modal-content{
+    display: none;
+	width:70%;
+	margin:1.5em auto 0;
+	padding:10px 20px;
+	border:2px solid #aaa;
+	background:#fff;
+	z-index:2;
+    position:fixed;
+    top: 25%;
+    font-size: 4vw;
+    text-align: center;
+}
+
+ 
+#modal-content p{
+    display: inline-block;
+    margin: 3vw 5vw;
+}
+
+#modal-content a{
+    text-decoration: none;
+    color: black;
+}
+
+#modal-content p{
+	margin-top:1em;
+}
+
+#modal-right{
+    text-align: right;
+    margin-top:0;
+}
+ 
+.button-link:hover{
+	cursor:pointer;
+	color:#f00;
+}
+
+/*オーバーレイ*/
+#modal-overlay{
+	z-index:1;
+	display:none;
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:120%;
+	background-color:rgba(0,0,0,0.75);
+}

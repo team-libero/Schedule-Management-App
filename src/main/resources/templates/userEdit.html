@@ -1,0 +1,63 @@
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common :: meta_footer('top',~{::link},~{::script})">
+    <!--meta http-equiv="content-language" content="ja">
+    <meta name="robots" content="noindex,nofollow">
+    <meta charset="UTF-8" -->
+    <link th:href="@{/css/userEdit.css}" rel="stylesheet">
+    <title>ユーザ編集画面</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:src="@{/js/userEdit.js}"></script> 
+
+<body>
+    <form method="post" id="form">
+    <div id="title">ユーザ編集</div>
+    <div class="contents">
+        <p class="edit_error" style="display: none;">未入力の項目があります</p>
+        <p class="pass_error" style="display: none;">パスワードに誤りがあります</p>
+    </div>
+    <table id="userEditTable">
+        <tr>
+            <td id="table-left">ユーザID</td>
+            <td id="table-right"><input type="text" name="userid"></td>
+        </tr>
+        <tr>
+            <td id="table-left">姓</td>
+            <td id="table-right"><input type="text" name="sei"></td>
+        </tr>
+        <tr>
+            <td id="table-left">名</td>
+            <td id="table-right"><input type="text" name="mei"></td>
+        </tr>
+        <tr>
+            <td id="table-left">メールアドレス</td>
+            <td id="table-right"><input type="text" name="address"></td>
+        </tr>
+        <tr>
+            <td id="table-left">パスワード</td>
+            <td id="table-right"><input type="password" name="password1"></td>
+        </tr>
+        <tr>
+            <td id="table-left">パスワード(確認)</td>
+            <td id="table-right"><input type="password" name="password2"></td>
+        </tr>
+        <tr>
+            <td id="table-left">グループ</td>
+            <td id="table-right">リベロ</td>
+        </tr>
+        <tr>
+            <td id="table-left">権限</td>
+            <td id="table-right">
+                <input type="radio" value="管理者" name="radio" style="margin-left: 1vw;">管理者
+                <input type="radio" value="一般" name="radio" style="margin-left: 3vw;">一般
+            </td>
+        </tr>
+    </table>
+    <input type="button" id="edit" value="編集">
+</form>
+<div th:replace="common :: footer"></div>
+</body>
+<!--iframe src="common.html" frameborder="0" style="width: 100%; position: absolute; bottom: 0px;"></iframe -->
+
+</html>

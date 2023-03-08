@@ -1,0 +1,40 @@
+body{
+    overflow-y: hidden;
+    overflow-x: hidden;
+    margin: 0px;
+    border-top: 0.2vw solid;
+}
+.common_footer{
+    text-align: center;
+}
+
+.common_footer div{
+    display: inline-block;
+    width: 31vw;
+    padding: 10px 0px;
+    cursor: pointer;
+    color: #ff8400;
+}
+
+.common_footer div:hover{
+    background-color: #ff8400;
+}
+
+.common_footer i{
+    font-size: 6vw;
+}
+.common_footer p{
+    display: block;
+    margin: 0px;
+    font-size: 4vw;
+}
+
+.common_footer div:hover >p,.common_footer div:hover >i{
+    color: white;
+}
+
+.common_footer .selected_typ{
+    background-color: #ff8400;
+    color: white;
+    pointer-events: none;
+}

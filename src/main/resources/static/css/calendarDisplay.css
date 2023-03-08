@@ -1,0 +1,127 @@
+html{
+    height: 100%;
+}
+
+body {
+    background-color: #f1db83;
+    user-select: none;
+    height: 100%;
+}
+
+.main_contents {
+    text-align: center;
+}
+
+.plus_contents i {
+    margin: 0px 6vw;
+    font-size: 13vw;
+    color: #ff7100;
+    cursor: pointer;
+}
+
+.plus_contents i:hover {
+    color: #ff0303;
+}
+
+.contents {
+    text-align: center;
+    padding-top: 2vw;
+}
+
+.contents p {
+    color: black;
+    font-size: 5vw;
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-block;
+    margin: 0px 2vw;
+}
+
+.contents p:hover {
+    color: #ff7100;
+}
+
+.contents select:hover {
+    color: #ff7100;
+}
+
+.contents select {
+    border: none;
+    outline: none;
+    background: transparent;
+    box-shadow: none;
+    appearance: none;
+    font-size: 7vw;
+    text-align: center;
+    font-weight: bold;
+}
+
+.contents select option {
+    color: black;
+    font-size: 2vw;
+}
+
+#calendar {
+    margin: 8vw 0px;
+}
+
+.calendar {
+    margin: 0px auto;
+    font-size: 5vw;
+}
+
+.calendar th {
+    padding: 0px 1vw;
+}
+
+.calendar td {
+    text-align: center;
+    border: 0.1vw solid orange;
+    padding: 2vw;
+}
+
+.calendar td:hover {
+    background-color: #ffb300;
+    color: white;
+    cursor: pointer;
+}
+
+.contents .logout {
+    float: left;
+}
+
+.contents .addsk {
+    float: right;
+}
+
+.table_contents{
+    display: none;
+    border-top: 2vw dashed green;
+    height: 46vw;
+}
+
+.table_contents_div table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.table_contents_div table th,
+.table_contents_div table td {
+    padding: 3vw 6vw;
+    text-align: left;
+    font-size: 4vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: bold;
+}
+
+.table_contents_div table td a{
+    text-decoration: none;
+    color: #853b00;
+}
+
+.table_contents_div table tr:nth-child(odd) {
+    background-color: #eee
+}

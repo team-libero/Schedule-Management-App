@@ -1,0 +1,134 @@
+/* ================================================
+body
+================================================ */
+body {
+    padding: 0.5em 1.5em;
+    margin: 1em 0;
+    font-weight: bold;
+    background: #FFF;
+    border: solid 4px #6091d3;
+    border-radius: 60px;
+}
+
+/* ================================================
+header
+================================================ */
+.button-left {
+    float :  left;
+}
+
+.button-right {
+    float :  right;
+}
+
+.header-button {
+    padding: 0;
+    border: none;
+    background: transparent;
+}
+  
+button img {
+    width : 35px;
+    height : 35px;
+    margin: 5px;
+}
+
+/* ================================================
+main
+================================================ */
+table {
+    width : 100%;
+    height : 100%;
+    border-collapse: separate;
+    border-spacing: 10px 20px;
+    word-break: break-all; /*テーブル幅で文字改行*/
+}
+
+td img {
+    width : 30px;
+    height : 30px;
+}
+
+.schedule-title {
+    font-size: 40px;
+}
+
+.schedule-clock {
+    font-size: 20px;
+}
+
+.schedule-address {
+    font-size: 18px;
+}
+
+.schedule-memo {
+    font-size: 16px;
+}
+
+.schedule-person {
+    font-size: 14px;
+}
+
+.schedule-section {
+    font-size: 14px;
+    text-align:right;
+}
+
+/* ================================================
+モーダル画面
+================================================ */
+.modal {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+  }
+  
+  .modal-content {
+    background-color: white;
+    margin: 60% auto;
+    width: 80%;
+    height: 30%;
+    box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2),0 7px 20px 0 rgba(0,0,0,0.17);
+    animation-name: modalopen;
+    animation-duration: 1s;
+    border: solid 3px #6091d3;
+    border-radius: 40px;
+  }
+  
+  @keyframes modalopen {
+    from {opacity: 0}
+    to {opacity: 1}
+  }
+  
+  .modal-header {
+    padding: 10px 25px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .modalClose {
+    height:20px;
+    width:20px;
+    border-radius: 50%;
+    line-height:20px;
+    font-size: 20px;
+    border: solid 2px #080808;
+    text-align:center;
+  }
+  
+  .modal-body {
+    text-align: center;
+    font-size: 120%;
+  }
+
+  .modal-button {
+    width:55px;
+    height:35px;
+    margin: 1px 40px;
+  }
+ 

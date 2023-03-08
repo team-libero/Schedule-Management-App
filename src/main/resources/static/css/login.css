@@ -1,0 +1,74 @@
+body{
+    background-color: #0e7c4e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contents{
+    text-align: center;
+}
+
+.contents p{
+    color: white;
+    font-weight: bold;
+}
+
+.contents .title{
+    font-size: 16vw;
+    display: contents;
+}
+
+.contents #send_mail{
+    border-bottom: solid;
+    display: inline-block;
+    cursor: pointer;
+    font-size:4vw;
+}
+
+input[type="text"]{
+    outline: none;
+    border: none;
+    border-radius: 1vw;
+    display: block;
+    margin: 2vw auto;
+    width: 50%;
+    height: 8vw;
+    padding: 1vw;
+    font-size: 4vw;
+}
+
+input[type="password"]{
+    outline: none;
+    border: none;
+    border-radius: 1vw;
+    display: block;
+    margin: 2vw auto;
+    width: 50%;
+    height: 8vw;
+    padding: 1vw;
+    font-size: 4vw;
+}
+
+/* テキストボックスエラー*/
+.error_tbox{
+    color: red;
+    background-color: #ffb4b4;
+    border: 3px solid red !important;
+}
+
+input[type="button"]{
+    background-color: orange;
+    width: 50%;
+    height: 5%;
+    border-radius: 15px;
+    color: white;
+    font-weight: bold;
+    font-size: 4vw;
+}
+
+.contents .login_error{
+    color: #ff0000;
+    font-weight: bold;
+    font-size: 4vw;
+}

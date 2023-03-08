@@ -1,0 +1,57 @@
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common :: meta_footer('top',~{::link},~{::script})">
+    <!--meta http-equiv="content-language" content="ja">
+    <meta name="robots" content="noindex,nofollow">
+    <meta charset="UTF-8 "-->
+    <link th:href="@{/css/userSelect.css}" rel="stylesheet">
+    <title>ユーザ編集（ユーザ選択）画面</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:src="@{/js/userSelect.js}"></script> 
+
+<body>
+    <form method="post" id="form">
+    <div id="title">ユーザ編集（ユーザ選択）</div>
+    <table id="userRegister">
+        <tr>
+            <td id="register-left">グループ</td>
+            <td id="register-right">リベロ</td>
+        </tr>
+    </table>
+    <input type="button" id="register" value="新規登録" style="margin-bottom: 2vw;">
+    <table id="userSelectTable">
+        <tr id="userSelectTableHead">
+            <th id="head-left">選択</th>
+            <th id="head-center">ユーザーID</th>
+            <th id="head-right">氏名</th>
+        </tr>
+        <tr id="userSelectTableContent">
+            <td id="table-left"><input type="radio" name="radio"></td>
+            <td id="table-center">taro1</td>
+            <td id="table-right">山田　太郎</td>
+        </tr>
+        <tr id="userSelectTableContent">
+            <td id="table-left"><input type="radio" name="radio"></td>
+            <td id="table-center">hanakoT</td>
+            <td id="table-right">田中　花子</td>
+        </tr>
+        <tr id="userSelectTableContent">
+            <td id="table-left"><input type="radio" name="radio"></td>
+            <td id="table-center">ts08</td>
+            <td id="table-right">鈴木　たかし</td>
+        </tr>
+        <tr id="userSelectTableContent">
+            <td id="table-left"><input type="radio" name="radio"></td>
+            <td id="table-center">AlexY</td>
+            <td id="table-right">吉田　アレックス</td>
+        </tr>
+    </table>
+    <input type="button" name="editbtn" id="edit" value="編集">
+    <input type="button" name="deletebtn" id="delete" value="削除">
+</form>
+<div th:replace="common :: footer"></div>
+</body>
+<!--iframe src="../common/common.html" frameborder="0" style="width: 100%; position: absolute; bottom: 0px;"></iframe -->
+
+</html>

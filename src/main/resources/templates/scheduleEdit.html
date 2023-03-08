@@ -1,0 +1,65 @@
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common :: meta_footer('top',~{::link},~{::script})">
+    <link th:href="@{/css/scheduleEdit.css}" rel="stylesheet">
+    <title>スケジュール編集画面</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:src="@{/js/scheduleEdit.js}"></script> 
+
+<body>
+    <form method="post" id="form">
+        <div class="parent_box">
+            <div class="title_box">
+                <p>タイトル</p>
+                <input type="text" name="titile">
+            </div>
+            <p class="error error_title">タイトルは必須です</p>
+        </div>
+        <div class="parent_box">
+            <div class="date_box">
+                <input type="date" name="from_date" value="">
+                <input type="time" name="from_time" value="00:00">
+                <p>～</p>
+                <input type="date" name="to_date" value="">
+                <input type="time" name="to_time" value="">
+            </div>
+            <p class="error error_from">開始日時は必須です</p>
+            <p class="error error_to">終了日時を正しく入力してください</p>
+        </div>
+        <div class="place_box">
+            <p>場所</p>
+            <input type="text" name="place">
+        </div>
+        <div class="contents_box">
+            <p>説明</p>
+            <textarea name="contents" rows="5" cols="400"></textarea>
+        </div>
+        <div class="kbn_box" id ="kbn_box">
+            <input type="radio" id="kojin" name="kbn" value="0" checked="">
+            <label for="kojin">個人</label>
+
+            <input type="radio" id="group" name="kbn" value="1">
+            <label for="group">グループ</label>
+        </div>
+        <div class="announce_box">
+            <label for="announce">開始時に通知する</label>
+            <input type="checkbox" id="announce" name="announce" value="1" style="transform: scale(5);" disabled="">
+        </div>
+        <div class="form_box">
+            <input type="button" value="戻る" id="modal_open" name="modal_open">
+            <input type="submit" value="登録" id="submit" name="submit">
+        </div>
+    </form>
+    <div class="modal_box">
+        <div id="modal-content">
+            <p>入力した情報が削除されます。よろしいですか？</p>
+            <p><a href="#" onclick="history.back();">OK</a></p>
+            <p><a id="modal-cancel" class="button-link">閉じる</a></p>
+        </div>
+    </div>
+<div th:replace="common :: footer"></div>
+</body>
+<!--iframe src="../common/common.html" frameborder="0" style="width: 100%; position: absolute; bottom: 0px;"></iframe -->
+
+</html>
