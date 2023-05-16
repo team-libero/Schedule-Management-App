@@ -20,19 +20,19 @@
     <table id="userEditTable">
         <tr>
             <td id="table-left">ユーザID</td>
-            <td id="table-right"><input type="text" name="userid"></td>
+            <td id="table-right"><input type="text" name="userid" th:value="${userInfo.userId}"></td>
         </tr>
         <tr>
             <td id="table-left">姓</td>
-            <td id="table-right"><input type="text" name="sei"></td>
+            <td id="table-right"><input type="text" name="sei" th:value="${userInfo.lastName}"></td>
         </tr>
         <tr>
             <td id="table-left">名</td>
-            <td id="table-right"><input type="text" name="mei"></td>
+            <td id="table-right"><input type="text" name="mei" th:value="${userInfo.firstName}"></td>
         </tr>
         <tr>
             <td id="table-left">メールアドレス</td>
-            <td id="table-right"><input type="text" name="address"></td>
+            <td id="table-right"><input type="text" name="address" th:value="${userInfo.email}"></td>
         </tr>
         <tr>
             <td id="table-left">パスワード</td>
