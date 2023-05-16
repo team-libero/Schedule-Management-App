@@ -14,20 +14,31 @@
     <footer id="footer" th:fragment="footer">
         <div class="common_footer">
             <div class="def_dis disp_mode">
-                <input type="hidden" value="0">
                 <i class="fa-solid fa-user"></i>
-                <p>個人</p>
+                <p><a th:href="@{/calendarDisplay(group='0')}">プライベート</a></p>
             </div>
             <div class="grp_typ disp_mode">
-                <input type="hidden" value="1">
+                <input type="hidden" value="1"> 
                 <i class="fa-solid fa-people-group"></i>
-                <p>グループ</p>
+                <p><a th:href="@{/calendarDisplay(group='1')}">グループ</a></p>
             </div>
             <div class="disp_mode">
                 <input type="hidden" value="2">
                 <i class="fa-solid fa-house"></i>
-                <p>アカウント</p>
+                <p><a th:href="@{/userSelect}">アカウント</a></p>
             </div>
+            
+            <!--/*
+            <div class="disp_mode">
+                <i class="fa-solid fa-house"></i>
+                <p><a th:href="@{/userSelect}">アカウント</a></p>
+            </div>
+            <div class="disp_mode">
+                <i class="fa-solid fa-house"></i>
+                <p><a th:href="@{/userEdit}">アカウント</a></p>
+            </div>
+            */-->
+
         </div>
     </footer>
 </body>
