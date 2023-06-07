@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.act.libero.entity.Schedule;
 import com.act.libero.repository.ScheduleMapper;
+import java.util.Date;
 
 @Service
 public class ScheduleDetailService {
@@ -34,7 +35,7 @@ public class ScheduleDetailService {
      * スケジュール情報取得
      * return 検索結果
      */
-    public Schedule deleteSchedule(int scheduleId) {
-        return scheduleMapper.deleteSchedule(scheduleId);
+    public Schedule deleteSchedule(int scheduleId, Date date) {
+        return scheduleMapper.deleteSchedule(scheduleId, date);
     }
 }
