@@ -15,50 +15,52 @@
             </div>
             <div class="button-right">
                 <button class="header-button" type="button" onclick="location.href='./scheduleEdit.html'"><img src="./img/edit.png" alt="編集"/></button>
-                <button class="header-button" type="button" id="modal_open" name="modal_open"> <img src="./img/delete.png" alt="削除"/></button>
+                <button class="header-button" type="button" id="modal_open" name="modal_open" formaction="/delete"><img src="./img/delete.png" alt="削除"/></button>
             </div>
         </form>
     </header>
 
     <div class="schedule">
+        <form method="get" id="getForm">
         <table>
             <tr class="schedule-title">
                 <td></td>
-                <td>中帰社</td>
+                <td th:text="${scheduleInfo.titleName}"></td>
             </tr>
             <tr class="schedule-clock">
                 <td><img src="./img/clock.png" alt="日時アイコン"></td>
-                <td>11  月　24  日　（ 水 ）</td>
+                <td th:text="|${scheduleInfo.fromDate}${scheduleInfo.dayOfWeekFrom}|"></td>
             </tr>
             <tr class="schedule-clock">
                 <td></td>
-                <td>14 : 00  ～</td>
+                <td th:text="|${scheduleInfo.fromTime}  ～|"></td>
             </tr>
             <tr class="schedule-clock">
                 <td></td>
-                <td>11  月　24  日　（ 水 ）</td>
+                <td th:text="|${scheduleInfo.toDate}${scheduleInfo.dayOfWeekTo}|"></td>
             </tr>
             <tr class="schedule-clock">
                 <td></td>
-                <td>21 : 00</td>
+                <td th:text="${scheduleInfo.toTime}"></td>
             </tr>
             <tr class="schedule-address">
                 <td><img src="./img/address.png" alt="場所アイコン"></td>
-                <td>東京都新宿区新宿1-11-5 不二越ビル4F</td>
+                <td th:text="${scheduleInfo.address}"></td>
             </tr>
             <tr class="schedule-memo">
                 <td><img src="./img/memo.png" alt="説明アイコン"></td>
-                <td>健康診断ありのため注意。</td>
+                <td th:text="${scheduleInfo.memo}"></td>
             </tr>
             <tr class="schedule-person">
                 <td><img src="./img/icon.png" alt="人物アイコン"></td>
-                <td>菊地恭平</td>
+                <td th:text="|${scheduleInfo.lastName}${scheduleInfo.firstName}|"></td>
             </tr>
             <tr class="schedule-section">
                 <td></td>
-                <td>グループスケジュール</td>
+                <td th:text="${scheduleInfo.scheduleKbn}"></td>
             </tr>
         </table>
+    </form>
     </div>
 
 
