@@ -9,23 +9,46 @@
     <th:block th:replace="${links} ?: _" />
     <th:block th:replace="${scripts} ?: _" />
 </head>
-<script src="../js/common.js"></script>
 <body oncontextmenu="return false;">
     <footer id="footer" th:fragment="footer">
         <div class="common_footer">
-            <div class="def_dis disp_mode">
-                <i class="fa-solid fa-user"></i>
-                <p><a th:href="@{/calendarDisplay(group='0')}">プライベート</a></p>
-            </div>
-            <div class="grp_typ disp_mode">
-                <i class="fa-solid fa-people-group"></i>
-                <p><a th:href="@{/calendarDisplay(group='1')}">グループ</a></p>
-            </div>
-            <div class="disp_mode">
-                <i class="fa-solid fa-house"></i>
-                <p th:if="${session.authorityNo} == 0"><a th:href="@{/userSelect}">アカウント</a></p>
-                <p th:if="${session.authorityNo} == 1"><a th:href="@{/userEdit}">アカウント</a></p>
-            </div>
+
+            <!-- group='0'（個人スケジュール）をパラメータにして遷移する -->
+            <a th:href="@{/calendarDisplay(group='0')}">
+                <!-- group='0'（個人スケジュール）表示中であればクラス名を付与してCSSを充てる -->
+                <div class="disp_mode" th:classappend="${group} == '0' ? 'current_select'">
+                    <i class="fa-solid fa-user"></i>
+                    <p>プライベート</p>
+                </div>
+            </a>
+
+            <!-- group='1'（グループスケジュール）をパラメータにして遷移する -->
+            <a th:href="@{/calendarDisplay(group='1')}">
+                <!-- group='1'（グループスケジュール）表示中であればクラス名を付与してCSSを充てる -->
+                <div class="disp_mode" th:classappend="${group} == '1' ? 'current_select'">
+                    <i class="fa-solid fa-people-group"></i>
+                    <p>グループ</p>
+                </div>
+            </a>
+
+            <!-- セッションに保持されている権限によって表示を出し分ける -->
+            <th:block th:if="${session.authorityNo} == 0">
+                <a th:href="@{/userSelect}">
+                    <div class="disp_mode">
+                        <i class="fa-solid fa-house"></i>
+                        <p>アカウント</p>
+                    </div>
+                </a>
+            </th:block>
+            <th:block th:if="${session.authorityNo} == 1">
+                <a th:href="@{/userEdit}">
+                    <div class="disp_mode">
+                        <i class="fa-solid fa-house"></i>
+                        <p>アカウント</p>
+                    </div>
+                </a>
+            </th:block>
+
         </div>
     </footer>
 </body>
