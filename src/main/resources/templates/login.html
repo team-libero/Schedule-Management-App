@@ -16,14 +16,17 @@
         <div class="contents">
             <p class="title">Libero</p>
         </div>
-        <form method="post" id="form">
+        <form th:action="@{/certification}" th:object="${LoginInfo}" method="post" id="form">
             <div class="contents">
+                <span th:if="${errorMessage}!= null" th:text="${errorMessage}" class="error_tbox"></span>
                 <input type="text" maxlength="20" name="userid" placeholder="ユーザID">
+                <span th:if="${errorMessageUserId}!= null" th:text="${errorMessageUserId}" class="error_tbox"></span>
                 <input type="password" maxlength="20" name="password" placeholder="パスワード">
+                <span th:if="${errorMessagePassword}!= null" th:text="${errorMessagePassword}" class="error_tbox"></span>
             </div>
 
             <div class="contents">
-                <input type="button" value="ログイン" id="login_btn">
+                <input type="submit" value="ログイン" id="login_btn">
                 <p class="login_error" style="display: none;">ログインIDまたはパスワードに誤りがあります。</p>
             </div>
         </form>

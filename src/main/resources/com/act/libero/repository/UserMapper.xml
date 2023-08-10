@@ -9,4 +9,65 @@
         SELECT * FROM users WHERE user_id = #{userId}
     </select>
 
+    <!-- 検索（ユーザーID,パスワード） -->
+    <select id="selectUserPassword" resultType="com.act.libero.entity.User">
+        SELECT 
+            *
+        FROM
+            users
+        WHERE
+            user_id = #{userId}
+            AND password = #{encryptedPassword}
+            AND delete_flag = '0'
+    </select>
+
+    <!-- 更新（最終ログイン日時） -->
+    <update id="updateUserLastLoginAt">
+        UPDATE
+            users
+        SET
+            last_login_at = CURRENT_TIMESTAMP
+            ,user_id = #{userId}
+            ,updated_at = CURRENT_TIMESTAMP
+        WHERE
+            user_id = #{userId}
+    </update>
+
+    <insert id="insertUser" parameterType="com.act.libero.entity.User">
+        INSERT INTO users
+        (
+            user_id
+            ,last_name
+            ,first_name
+            ,authority_no
+            ,users_group_id
+            ,email
+            ,password
+            ,last_login_at
+            ,delete_flag
+            ,deleted_at
+            ,created_user_id
+            ,created_at
+            ,updated_user_id
+            ,updated_at
+        )
+        VALUES
+        (
+            #{user.userId}
+            ,#{user.lastName}
+            ,#{user.firstName}
+            ,#{user.authorityNo}
+            ,#{user.usersGroupId}
+            ,#{user.email}
+            ,#{user.password}
+            ,#{user.lastLoginAt}
+            ,#{user.deleteFlag}
+            ,#{user.deletedAt}
+            ,#{user.createdUserId}
+            ,CURRENT_TIMESTAMP
+            ,#{user.updatedUserId}
+            ,CURRENT_TIMESTAMP
+        )
+    </insert>
+
 </mapper>

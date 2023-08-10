@@ -5,7 +5,7 @@ $(document).ready(function () {
 
 
 $(function () {
-
+/*
     $('#login_btn').click(function () {
 
         var userid = $('input[name="userid"]').val();
@@ -20,7 +20,7 @@ $(function () {
             $('input[type="password"]').addClass("error_tbox");
         }
     })
-
+*/
     $('#send_mail').click(function () {
         alert("登録されているメールアドレスに、パスワード再設定メールを送信しました。");
     })
