@@ -26,22 +26,27 @@ import io.micrometer.common.util.StringUtils;
 
 @Controller
 public class LoginController {
-    // @RequestMapping("/")
-	// public String login() {
-	// 	return "login";
-	// }
-
 	@Autowired
     protected SessionInfo sessionInfo;
 
 	@Autowired
     LoginService loginService;
 
+	/**
+	 * 初期表示
+	 * @return 遷移先画面名
+	 */
     @RequestMapping("/")
 	public String login() {
 		return "login";
 	}
 
+	/**
+	 * 
+	 * @param loginInfo ログイン入力情報
+	 * @param model モデル
+	 * @return 遷移先画面名
+	 */
 	@PostMapping("/certification")
 	public String certification(@ModelAttribute LoginInfo loginInfo, Model model) {
 
@@ -102,49 +107,20 @@ public class LoginController {
 			user = null;
 		}
 
-		// user = loginService.selectUser(userId);
-
-		// user = loginService.selectUserPassword(userId, password);
-
 		//ユーザー情報取得チェック
 		if (user == null) {
 			// ユーザテーブルから情報を取得できなかった場合
 			model.addAttribute("errorMessage", "ログインIDかパスワードに誤りがあります。");
+			// ログイン画面を再表示
 			return "login";
 		}
-		// else {
-		// 	try {
-
-		// 	//TODO keyとivは外部（設定ファイルやDBなど）に書き出しが必要。iv、keyは128ビット固定長。
-		// 	IvParameterSpec ivTest = new IvParameterSpec("ivTest1234567890".getBytes());
-		// 	SecretKeySpec keyTest = new SecretKeySpec("keyTest123456789".getBytes(), "AES");
-	
-		// 	String dbPassword = decrypto(password.getBytes(), keyTest, ivTest);
-
-		// 	if (!password.equals(dbPassword)) {
-		// 		// 入力パスワードとDBパスワードが一致しなかった場合
-		// 		model.addAttribute("errorMessage", "ログインIDかパスワードに誤りがあります。");
-		// 		return "login";
-		// 	}
-
-		// 	} catch (GeneralSecurityException e) {
-		// 		// DBパスワードの復号化に失敗した場合	
-		// 		e.printStackTrace();
-		// 		model.addAttribute("errorMessage", "ログインIDかパスワードに誤りがあります。");
-		// 		return "login";
-		// 	}
-		// }
-
-			// String dbPassword = decrypto(user.getPassword().getBytes(), keyTest, ivTest);
-			// // 入力パスワードとDBパスワードが一致しなかった場合
-			// model.addAttribute("errorMessage", "ログインIDかパスワードに誤りがあります。");
-			// return "login";
 
 		// 認証成功した場合
 		// ユーザー情報更新
 		if(!loginService.UpdateUserLastLoginAt(userId)){
 			// 更新に失敗した場合
 			model.addAttribute("errorMessage", "最終ログイン日時の更新に失敗しました。");
+			// ログイン画面を再表示
 			return "login";
 		}
 		// セッション情報格納
@@ -157,10 +133,16 @@ public class LoginController {
 		// カレンダー種別を遷移先コントローラへ渡す()
 		model.addAttribute("calendarSBT", "0");
 
+		// 次画面に遷移
 		return "forward:calendarDisplay";
 		// return "common";
 	}
 
+	/**
+	 * 半角英数字チェック
+	 * @param value チェック対象文字列
+	 * @return true:チェックOK false:チェックNG
+	 */
 	private boolean isAlphaNum(String value) {
 		String regex_AlphaNum = "^[A-Za-z0-9]+$"; 
 		Pattern p1 = Pattern.compile(regex_AlphaNum);
@@ -168,6 +150,14 @@ public class LoginController {
     	return m1.matches();
 	}
 
+	/**
+	 * 文字列の暗号化
+	 * @param plainText 入力文字列
+	 * @param key 暗号化Key
+	 * @param iv IV
+	 * @return 暗号化文字列
+	 * @throws GeneralSecurityException 例外
+	 */
 	private byte[] encrypto(String plainText, SecretKey key, IvParameterSpec iv) throws GeneralSecurityException {
 		// 書式:"アルゴリズム/ブロックモード/パディング方式"
 		Cipher encrypter = Cipher.getInstance("AES/CBC/PKCS5Padding");
@@ -176,6 +166,14 @@ public class LoginController {
 		return encrypter.doFinal(plainText.getBytes());
 	}
 
+	/**
+	 * 文字列の復号化
+	 * @param cryptoText 入力文字列
+	 * @param key 暗号化Key
+	 * @param iv IV
+	 * @return 復号化文字列
+	 * @throws GeneralSecurityException 例外
+	 */
 	public String decrypto(byte[] cryptoText, SecretKey key, IvParameterSpec iv) throws GeneralSecurityException {			
 			
         // 書式:"アルゴリズム/ブロックモード/パディング方式"			
@@ -184,33 +182,4 @@ public class LoginController {
 			
         return new String(decrypter.doFinal(cryptoText));			
 	}
-
-	/**
-	 * テスト用ユーザー情報登録
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping("/insertTestData")
-	public String insertTestData(Model model) {
-		User user = new User();
-		user.setUserId("abcde54321");
-		user.setLastName("kawakami");
-		user.setFirstName("hiroki");
-		user.setAuthorityNo(1);
-
-		try {
-			IvParameterSpec ivTest = new IvParameterSpec("ivTest1234567890".getBytes());
-			SecretKeySpec keyTest = new SecretKeySpec("keyTest123456789".getBytes(), "AES");
-			user.setPassword(new String(encrypto("password", keyTest, ivTest)));
-		} catch (GeneralSecurityException e) {
-			// 入力パスワードの暗号化に失敗した場合	
-			e.printStackTrace();
-			return "login";
-		}
-
-		loginService.insertUser(user);
-
-		return "login";
-	}
-
 }
