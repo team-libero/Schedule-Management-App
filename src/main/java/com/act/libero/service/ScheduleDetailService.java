@@ -1,7 +1,6 @@
 package com.act.libero.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +27,7 @@ public class ScheduleDetailService {
      * スケジュール情報取得
      * return 検索結果
      */
-    public ScheduleInfo selectSchedule(int scheduleId, String scheduleYMD, String calenderType) {
+    public ScheduleInfo selectSchedule(int scheduleId, String scheduleYMD, String calenderType, HttpSession session) {
 
         Schedule schedule = scheduleMapper.selectSchedule(scheduleId);
         if (schedule == null) {
@@ -40,6 +39,7 @@ public class ScheduleDetailService {
         }
         // 項目編集
         ScheduleInfo scheduleTmp = editItem(schedule);
+        session.setAttribute("updDate",scheduleTmp.getUpdatedAt());
         scheduleTmp.setScheduleId(scheduleId);
         scheduleTmp.setCalenderType(calenderType);
 
@@ -52,7 +52,8 @@ public class ScheduleDetailService {
      * @param RedirectAttributes redirectAttributes
      * @return true/falses
      */
-    public boolean chkScheduleExist(int scheduleId, Date updDate) {
+    public boolean chkScheduleExist(int scheduleId, HttpSession session) {
+        Date updDate = (Date)session.getAttribute("updDate");
         Integer scheduleExistChk = scheduleMapper.chkScheduleExist(scheduleId, updDate);
         if (scheduleExistChk != 1) {
             return false;
@@ -65,7 +66,8 @@ public class ScheduleDetailService {
      * スケジュール削除
      */
     @Transactional
-    public void deleteSchedule(int scheduleId, Date updDate) {
+    public void deleteSchedule(int scheduleId, HttpSession session) {
+        Date updDate = (Date)session.getAttribute("updDate");
         scheduleMapper.deleteSchedule(scheduleId, updDate);
     }
 
