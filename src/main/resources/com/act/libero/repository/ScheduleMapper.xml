@@ -20,10 +20,18 @@
         WHERE schedule_id = #{scheduleId} AND schedule.delete_flag = 0    
     </select>
 
+    <select id="chkScheduleExist" resultType="Integer">
+        SELECT COUNT(*)
+        FROM schedule
+        WHERE schedule_id = #{scheduleId}
+         AND delete_flag = 0
+         AND updated_at = #{updatedAt}
+    </select>
+
     <update id="deleteSchedule">
         UPDATE schedule 
         SET delete_flag = 1,
-            deleted_at = CURRENT_DATE() 
+            deleted_at = CURRENT_TIMESTAMP() 
         WHERE schedule_id = #{scheduleId}
          AND delete_flag = 0
          AND updated_at = #{updatedAt}

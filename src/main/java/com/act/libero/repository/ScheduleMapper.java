@@ -10,7 +10,7 @@ import com.act.libero.entity.Schedule;
 public interface ScheduleMapper {
     Schedule selectSchedule(int scheduleId);
 
-    Schedule chkScheduleExist(int scheduleId);
+    Integer chkScheduleExist(int scheduleId,Date updatedAt);
 
-    Schedule deleteSchedule(int scheduleId,Date updatedAt);
+    void deleteSchedule(int scheduleId,Date updatedAt);
 }

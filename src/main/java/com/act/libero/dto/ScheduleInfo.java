@@ -7,6 +7,14 @@ import lombok.Data;
 @Data
 public class ScheduleInfo implements Serializable {
 
+    /** エラーメッセージ */
+    private String errMsg;
+    /** スケジュールID */
+    private Integer scheduleId;
+    /** スケジュール年月日 */
+    private String scheduleYmd;
+    /** カレンダー種別 */
+    private String calenderType;
     /** タイトル */
     private String titleName;
     /** 開始日付 */

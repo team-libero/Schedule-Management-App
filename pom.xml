@@ -16,6 +16,10 @@
 	<properties>
 		<java.version>17</java.version>
 	</properties>
+	<bean id="transactionManager"
+           class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+  	<property name="dataSource" ref="dataSource" />
+	</bean>
 	<dependencies>
 	    <dependency>
             <groupId>org.mybatis.spring.boot</groupId>

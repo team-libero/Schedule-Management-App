@@ -15,7 +15,7 @@
             </div>
             <div class="button-right">
                 <button class="header-button" type="button" onclick="location.href='./scheduleEdit.html'"><img src="./img/edit.png" alt="編集"/></button>
-                <button class="header-button" type="button" id="modal_open" name="modal_open" formaction="/delete"><img src="./img/delete.png" alt="削除"/></button>
+                <button class="header-button" type="button" id="modal_open" name="modal_open"><img src="./img/delete.png" alt="削除"/></button>
             </div>
         </form>
     </header>
@@ -59,24 +59,27 @@
                 <td></td>
                 <td th:text="${scheduleInfo.scheduleKbn}"></td>
             </tr>
+            <input type="hidden" name="updatedAt" th:value="*{scheduleInfo.updatedAt}">
         </table>
     </form>
     </div>
 
 
     <!-- モーダル画面 -->
-    <div class="modal_box">
-        <div id="modal-content">
-            <div id="modal-right">
-                <p><a id="modal-cancel" class="button-link">×</a></p>
+    <form method="post" id="delete" th:action="@{scheduleDetail/delete}">
+        <div class="modal_box">
+            <div id="modal-content">
+                <div id="modal-right">
+                    <p><a id="modal-cancel" class="button-link">×</a></p>
+                </div>
+                <p>スケジュールを削除しますか？</p>
+                <p><a th:href="@{/scheduleDetail/delete?}">OK</a></p>
+                <p><a id="modal-cancel2" class="button-link">戻る</a></p>
             </div>
-            <p>スケジュールを削除しますか？</p>
-            <p><a href="./calendarDisplay.html">OK</a></p>
-            <p><a id="modal-cancel2" class="button-link">戻る</a></p>
         </div>
-    </div>
-      <script src="../js/scheduleDetail.js"></script> 
-      <div th:replace="common :: footer"></div>
+    </form>
+    <script src="../js/scheduleDetail.js"></script> 
+    <div th:replace="common :: footer"></div>
 </body>
 
 </html>
