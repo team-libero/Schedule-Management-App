@@ -135,7 +135,6 @@ public class LoginController {
 
 		// 次画面に遷移
 		return "forward:calendarDisplay";
-		// return "common";
 	}
 
 	/**

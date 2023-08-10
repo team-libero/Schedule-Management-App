@@ -21,6 +21,30 @@
             AND delete_flag = '0'
     </select>
 
+     <!-- 検索（グループID） -->
+    <select id="selectUserList" resultType="com.act.libero.entity.User">
+        SELECT 
+            users_group.users_group_name
+            ,users.user_id
+            ,users.last_name
+            ,users.first_name
+            ,users.updated_at
+        FROM
+            users
+        INNER JOIN
+            users_group
+        ON
+            users_group.users_group_id = users.users_group_id
+        WHERE
+            users_group.users_group_id = #{groupId}
+            AND users_group.delete_flag = 0
+            AND users.delete_flag = 0
+        ORDER BY
+            users.authority_no ASC
+            ,users.created_at ASC
+           
+    </select>
+
     <!-- 更新（最終ログイン日時） -->
     <update id="updateUserLastLoginAt">
         UPDATE

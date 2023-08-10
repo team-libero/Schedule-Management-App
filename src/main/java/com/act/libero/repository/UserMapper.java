@@ -1,5 +1,7 @@
 package com.act.libero.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,4 +16,6 @@ public interface UserMapper {
     boolean updateUserLastLoginAt(String userId);
 
     void insertUser(@Param("user") User user);
+
+    List<User> selectUserList(int GroupId);
 }
