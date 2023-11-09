@@ -14,4 +14,5 @@ public interface ScheduleDetailService {
 
     // スケジュール削除
     void deleteSchedule(int scheduleId, HttpSession session);
+    
 }

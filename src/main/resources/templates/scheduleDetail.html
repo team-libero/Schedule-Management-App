@@ -9,15 +9,17 @@
 
 <body>
     <header>
-        <form method="post" id="form">
-            <div class="button-left">
-                <button class="header-button" type="button" onclick="location.href='./calendarDisplay.html'"><img src="./img/back.png" alt="戻る"/></button>
-            </div>
-            <div class="button-right">
-                <button class="header-button" type="button" onclick="location.href='./scheduleEdit.html'"><img src="./img/edit.png" alt="編集"/></button>
-                <button class="header-button" type="button" id="modal_open" name="modal_open"><img src="./img/delete.png" alt="削除"/></button>
-            </div>
-        </form>
+        <div class="button-left">
+            <form action="#" th:action="@{/calendarDisplay}" method="post">
+                <button class="header-button" type="submit"><img src="./img/back.png" alt="戻る"/></button>
+            </form>
+        </div>
+        <div class="button-right">
+            <button class="header-button" type="button" id="modal_open" name="modal_open"><img src="./img/delete.png" alt="削除"/></button>
+            <form action="#" th:action="@{/scheduleEdit(scheduleId=${scheduleInfo.scheduleId})}" method="post">
+                <button class="header-button" type="submit"><img src="./img/edit.png" alt="編集"/></button>
+            </form>
+        </div>
     </header>
 
     <div class="schedule">

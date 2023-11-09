@@ -95,19 +95,21 @@ input[type="time"]{
     height: 8vw;
     width: 65vw;
     margin-left: 3vw;
-    font-size: 6vw;
+    font-size: 5vw;
 }
 
 .date_box input[type="date"] {
     height: 10vw;
     width: 34vw;
     font-size: 4vw;
+    padding-left: 1vw;
 }
 
 .date_box input[type="time"] {
     height: 10vw;
     width: 22vw;
     font-size: 4vw;
+    padding-left: 1vw;
 }
 
 .place_box input[type="text"] {

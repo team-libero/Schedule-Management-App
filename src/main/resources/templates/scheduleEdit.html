@@ -12,28 +12,28 @@
         <div class="parent_box">
             <div class="title_box">
                 <p>タイトル</p>
-                <input type="text" name="titile">
+                <input type="text" name="titile" th:value="${items.titleName != null ? items.titleName : ''}">
             </div>
             <p class="error error_title">タイトルは必須です</p>
         </div>
         <div class="parent_box">
             <div class="date_box">
-                <input type="date" name="from_date" value="">
-                <input type="time" name="from_time" value="00:00">
+                <input type="date" name="from_date" th:value="${items.fromDateTime != null ? #dates.format(items.fromDateTime, 'yyyy-MM-dd') : ''}">
+                <input type="time" name="from_time" th:value="${items.fromDateTime != null ? #dates.format(items.fromDateTime, 'HH:mm') : ''}">
                 <p>～</p>
-                <input type="date" name="to_date" value="">
-                <input type="time" name="to_time" value="">
+                <input type="date" name="to_date" th:value="${items.toDateTime != null ? #dates.format(items.toDateTime, 'yyyy-MM-dd') : ''}">
+                <input type="time" name="to_time" th:value="${items.toDateTime != null ? #dates.format(items.toDateTime, 'HH:mm') : ''}">
             </div>
             <p class="error error_from">開始日時は必須です</p>
             <p class="error error_to">終了日時を正しく入力してください</p>
         </div>
         <div class="place_box">
             <p>場所</p>
-            <input type="text" name="place">
+            <input type="text" name="place" th:value="${items.address != null ? items.address : ''}">
         </div>
         <div class="contents_box">
             <p>説明</p>
-            <textarea name="contents" rows="5" cols="400"></textarea>
+            <textarea name="contents" rows="5" cols="400" th:text="${items.memo != null ? items.memo : ''}"></textarea>
         </div>
         <div class="kbn_box" id ="kbn_box">
             <input type="radio" id="kojin" name="kbn" value="0" checked="">

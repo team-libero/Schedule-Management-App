@@ -25,13 +25,14 @@ header
 }
 
 .button-right {
-    float :  right;
+    
 }
 
 .header-button {
     padding: 0;
     border: none;
     background: transparent;
+    float : right;
 }
   
 button img {

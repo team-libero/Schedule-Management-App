@@ -25,7 +25,7 @@ public class ScheduleDetailController {
   ScheduleDetailService scheduleDetailService;
 
   /**
-   * スケジュール詳細画面を表示
+   * 初期表示
    * 
    * @param model Model
    * @return スケジュール詳細画面
@@ -84,17 +84,17 @@ public class ScheduleDetailController {
     return "redirect:/calendarDisplay";
   }
 
-  /**
-   * スケジュール編集画面へ進む
-   * 
-   * @param model Model
-   * @return スケジュール詳細画面
-   */
-  @GetMapping(value = "/scheduleDetail/edit")
-  public String editSchedule(Model model, @RequestParam("scheduleId") int scheduleId,
-      @RequestParam("calendarType") String calendarType) {
-    model.addAttribute("scheduleId", scheduleId);
-    model.addAttribute("calendarType", calendarType);
-    return "forward:scheduleEdit";
-  }
+  // /**
+  //  * スケジュール編集画面へ進む
+  //  * 
+  //  * @param model Model
+  //  * @return スケジュール編集画面
+  //  */
+  // @GetMapping(value = "/scheduleDetail/edit")
+  // public String editSchedule(Model model, @RequestParam("scheduleId") int scheduleId,
+  //     @RequestParam("calendarType") String calendarType) {
+  //   model.addAttribute("scheduleId", scheduleId);
+  //   model.addAttribute("calendarType", calendarType);
+  //   return "forward:scheduleEdit";
+  // }
 }

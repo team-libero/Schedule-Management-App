@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.act.libero.repository.ScheduleEditMapper">
+
+    <select id="getScheduleInfo" resultType="com.act.libero.entity.ScheduleEdit">
+        SELECT *
+        FROM schedule
+        WHERE schedule_id = #{scheduleId}
+    </select>
+
+</mapper>
