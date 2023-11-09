@@ -1,8 +1,11 @@
 package com.act.libero.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.act.libero.dto.ScheduleEditInfo;
 import com.act.libero.entity.ScheduleEdit;
@@ -17,7 +20,10 @@ public class ScheduleEditServiceImpl implements ScheduleEditService {
     @Autowired
     private ScheduleEditMapper scheduleEditMapper;
 
-    public ScheduleEditInfo init(Integer scheduleId) {
+    /**
+     * 初期表示_編集
+     */
+    public ScheduleEditInfo initEdit(Integer scheduleId) {
         ScheduleEditInfo result = new ScheduleEditInfo();
         if (scheduleId != null) {
             ScheduleEdit items = scheduleEditMapper.getScheduleInfo(scheduleId);
@@ -27,7 +33,26 @@ public class ScheduleEditServiceImpl implements ScheduleEditService {
     }
 
     /**
-     * 初期表示画面項目作成用
+     * 初期表示_登録
+     */
+    public ScheduleEditInfo initRegist(String date, String calendarType) {
+        ScheduleEditInfo result = new ScheduleEditInfo();
+        String dateStr = date;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date dates = new Date();
+        try {
+            dates = formatter.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        result.setFromDateTime(dates);
+        result.setToDateTime(dates);
+        result.setCalendarType(calendarType);
+        return result;
+    }
+
+    /**
+     * 初期表示_編集 画面項目作成用
      */
     private ScheduleEditInfo createInitItem(ScheduleEdit se) {
         ScheduleEditInfo items = new ScheduleEditInfo();

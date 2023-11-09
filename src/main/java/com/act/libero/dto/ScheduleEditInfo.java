@@ -15,4 +15,5 @@ public class ScheduleEditInfo implements Serializable {
     private String address;
     private String memo;
     private int announceFlag;
+    private String calendarType;
 }

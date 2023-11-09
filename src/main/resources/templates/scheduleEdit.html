@@ -36,10 +36,10 @@
             <textarea name="contents" rows="5" cols="400" th:text="${items.memo != null ? items.memo : ''}"></textarea>
         </div>
         <div class="kbn_box" id ="kbn_box">
-            <input type="radio" id="kojin" name="kbn" value="0" checked="">
+            <input type="radio" id="kojin" name="kbn" value="0" th:checked="${!items.calendarType.equals('1')}">
             <label for="kojin">個人</label>
 
-            <input type="radio" id="group" name="kbn" value="1">
+            <input type="radio" id="group" name="kbn" value="1" th:checked="${items.calendarType.equals('1')}">
             <label for="group">グループ</label>
         </div>
         <div class="announce_box">
