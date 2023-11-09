@@ -60,6 +60,11 @@ td img {
     font-size: 90px;
 }
 
+.schedule-err {
+    font-size: 45px;
+    color: #f00;
+}
+
 .schedule-clock {
     font-size: 50px;
 }

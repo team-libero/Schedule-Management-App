@@ -20,9 +20,12 @@
         </form>
     </header>
 
-    <p th:text="${errMsg}"></p>
     <div class="schedule">
         <table>
+            <tr class="schedule-err">
+                <td></td>
+                <td th:text="${errMsg}">テスト</td>
+            </tr>
             <tr class="schedule-title">
                 <td></td>
                 <td th:text="${scheduleInfo.titleName}"></td>
@@ -65,14 +68,14 @@
 
 
     <!-- モーダル画面 -->
-    <form method="post" id="delete" th:action="@{scheduleDetail/delete}">
+    <form method="post" id="delete">
         <div class="modal_box">
             <div id="modal-content">
                 <div id="modal-right">
                     <p><a id="modal-cancel" class="button-link">×</a></p>
                 </div>
                 <p>スケジュールを削除しますか？</p>
-                <p><a th:href="@{/scheduleDetail/delete(scheduleId=${scheduleInfo.scheduleId})}">OK</a></p>
+                <p><a th:href="@{/scheduleDetail/delete(scheduleId=${scheduleInfo.scheduleId}, scheduleYMD=${scheduleInfo.scheduleYmd}, calendarType=${scheduleInfo.calendarType})}">OK</a></p>
                 <input type="hidden" name="updatedAt" th:value="${scheduleInfo.updatedAt}">
                 <p><a id="modal-cancel2" class="button-link">戻る</a></p>
             </div>

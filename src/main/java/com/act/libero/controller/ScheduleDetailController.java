@@ -34,12 +34,14 @@ public class ScheduleDetailController {
 
   public String scheduleDetail(@ModelAttribute ScheduleInfo scheduleInfo, Model model,
       @RequestParam("scheduleId") int scheduleId, @RequestParam("scheduleYMD") String scheduleYMD,
-      @RequestParam("calenderType") String calenderType, RedirectAttributes redirectAttrs, HttpSession session) {
+      @RequestParam("calendarType") String calendarType, RedirectAttributes redirectAttrs, HttpSession session) {
 
     // Service呼び出し
-    ScheduleInfo output = scheduleDetailService.selectSchedule(scheduleId, scheduleYMD, calenderType, session);
+    ScheduleInfo output = scheduleDetailService.selectSchedule(scheduleId, scheduleYMD, calendarType, session);
 
     if (!StringUtils.isEmpty(output.getErrMsg())) {
+      model.addAttribute("scheduleYMD", scheduleYMD);
+      model.addAttribute("calendarType", calendarType);
       model.addAttribute("errMsg", output.getErrMsg());
       return "forward:calendarDisplay";
     }
@@ -56,16 +58,29 @@ public class ScheduleDetailController {
   @GetMapping(value = "/scheduleDetail/delete")
 
   public String deleteSchedule(@ModelAttribute ScheduleInfo scheduleInfo, Model model,
-      RedirectAttributes redirectAttributes, @RequestParam("scheduleId") int scheduleId, HttpSession session) {
+      RedirectAttributes redirectAttributes, @RequestParam("scheduleId") int scheduleId,
+      @RequestParam("scheduleYMD") String scheduleYMD, @RequestParam("calendarType") String calendarType,HttpSession session) {
 
     // 削除対象存在チェック
-    boolean flg = scheduleDetailService.chkScheduleExist(scheduleId,session);
+    boolean flg = scheduleDetailService.chkScheduleExist(scheduleId, session);
     if (!flg) {
-      return "redirect:/scheduleDetail";
+      redirectAttributes.addAttribute("scheduleId", scheduleId);
+      redirectAttributes.addAttribute("scheduleYMD", scheduleYMD);
+      redirectAttributes.addAttribute("calendarType", calendarType);
+      model.addAttribute("scheduleYMD", scheduleYMD);
+      model.addAttribute("calendarType", calendarType);
+      model.addAttribute("errMsg", "対象の予定が存在しません。");
+      return "redirect:/calendarDisplay";
     }
 
     // スケジュール削除
-    scheduleDetailService.deleteSchedule(scheduleId, session);
+    try {
+      scheduleDetailService.deleteSchedule(scheduleId, session);
+    } catch (Exception e) {
+      model.addAttribute("errMsg", "削除に失敗しました。時間をおいてお試しください。");
+    }
+    model.addAttribute("scheduleYMD", scheduleYMD);
+    model.addAttribute("calendarType", calendarType);
     return "redirect:/calendarDisplay";
   }
 
@@ -77,9 +92,9 @@ public class ScheduleDetailController {
    */
   @GetMapping(value = "/scheduleDetail/edit")
   public String editSchedule(Model model, @RequestParam("scheduleId") int scheduleId,
-      @RequestParam("calenderType") String calenderType) {
+      @RequestParam("calendarType") String calendarType) {
     model.addAttribute("scheduleId", scheduleId);
-    model.addAttribute("calenderType", calenderType);
+    model.addAttribute("calendarType", calendarType);
     return "forward:scheduleEdit";
   }
 }

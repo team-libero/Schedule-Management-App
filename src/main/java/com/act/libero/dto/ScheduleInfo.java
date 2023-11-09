@@ -14,7 +14,7 @@ public class ScheduleInfo implements Serializable {
     /** スケジュール年月日 */
     private String scheduleYmd;
     /** カレンダー種別 */
-    private String calenderType;
+    private String calendarType;
     /** タイトル */
     private String titleName;
     /** 開始日付 */
