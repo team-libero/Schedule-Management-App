@@ -11,6 +11,10 @@
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script th:src="@{/js/login.js}"></script> 
 
+<script th:inline="javascript">
+    const errorMessage = /*[[${errorMessage}]]*/"errorMessage";
+</script>
+
 <body>
     <div class="main_contents">
         <div class="contents">
@@ -18,16 +22,13 @@
         </div>
         <form th:action="@{/certification}" th:object="${LoginInfo}" method="post" id="form">
             <div class="contents">
-                <span th:if="${errorMessage}!= null" th:text="${errorMessage}" class="error_tbox"></span>
                 <input type="text" maxlength="20" name="userid" placeholder="ユーザID">
-                <span th:if="${errorMessageUserId}!= null" th:text="${errorMessageUserId}" class="error_tbox"></span>
                 <input type="password" maxlength="20" name="password" placeholder="パスワード">
-                <span th:if="${errorMessagePassword}!= null" th:text="${errorMessagePassword}" class="error_tbox"></span>
             </div>
 
             <div class="contents">
-                <input type="submit" value="ログイン" id="login_btn">
-                <p class="login_error" style="display: none;">ログインIDまたはパスワードに誤りがあります。</p>
+                <input type="button" value="ログイン" id="login_btn">
+                <p class="login_error" style="display: none;">ユーザIDまたはパスワードに誤りがあります。</p>
             </div>
         </form>
         <div class="contents">

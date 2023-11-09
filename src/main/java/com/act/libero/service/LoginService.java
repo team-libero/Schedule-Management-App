@@ -39,10 +39,8 @@ public class LoginService {
     @Transactional(rollbackFor=Exception.class)
     public boolean UpdateUserLastLoginAt(String userId) {
         try {
-            userMapper.updateUserLastLoginAt(userId);
-            return true;
+            return userMapper.updateUserLastLoginAt(userId);
         } catch (Exception e) {
-            // model.addAttribute("errorMessage", "最終ログイン日時の更新に失敗しました。");
             e.printStackTrace();
             return false;
         }
