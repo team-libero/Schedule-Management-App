@@ -12,7 +12,11 @@
     <!-- 検索（ユーザーID,パスワード） -->
     <select id="selectUserPassword" resultType="com.act.libero.entity.User">
         SELECT 
-            *
+            user_id
+            ,last_name
+            ,first_name
+            ,authority_no
+            ,users_group_id
         FROM
             users
         WHERE
@@ -51,7 +55,7 @@
             users
         SET
             last_login_at = CURRENT_TIMESTAMP
-            ,user_id = #{userId}
+            ,updated_user_id = #{userId}
             ,updated_at = CURRENT_TIMESTAMP
         WHERE
             user_id = #{userId}

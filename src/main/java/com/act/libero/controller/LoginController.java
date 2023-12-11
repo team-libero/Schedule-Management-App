@@ -21,20 +21,20 @@ import com.act.libero.dto.SessionInfo;
 import com.act.libero.entity.User;
 import com.act.libero.service.LoginService;
 
-
 @Controller
 public class LoginController {
 	@Autowired
-    protected SessionInfo sessionInfo;
+	protected SessionInfo sessionInfo;
 
 	@Autowired
-    LoginService loginService;
+	LoginService loginService;
 
 	/**
 	 * 初期表示
+	 * 
 	 * @return 遷移先画面名
 	 */
-    @RequestMapping("/")
+	@RequestMapping("/")
 	public String login() {
 		return "login";
 	}
@@ -42,46 +42,46 @@ public class LoginController {
 	/**
 	 * 
 	 * @param loginInfo ログイン入力情報
-	 * @param model モデル
+	 * @param model     モデル
 	 * @return 遷移先画面名
 	 */
 	@PostMapping("/certification")
-	public String certification(@ModelAttribute LoginInfo loginInfo, RedirectAttributes redirectAttributes, Model model) {
+	public String certification(@ModelAttribute LoginInfo loginInfo, RedirectAttributes redirectAttributes,
+			Model model) {
 
-		//入力情報の取得
+		// 入力情報の取得
 		String userId = loginInfo.getUserid();
 		String password = loginInfo.getPassword();
-		
-		//ユーザー情報
+
+		// ユーザー情報
 		User user = null;
 
 		try {
 			// 設定ファイル(application.properties)の読み込み
 			ResourceBundle rb = ResourceBundle.getBundle("application");
 
-		// 入力パスワードを暗号化するための設定
-		IvParameterSpec ivTest = new IvParameterSpec(rb.getString("crypto.iv.string").getBytes());
-		SecretKeySpec keyTest = new SecretKeySpec(rb.getString("crypto.key.string").getBytes(), "AES");
-		//ユーザーテーブルからデータ取得
-		user = loginService.selectUserPassword(userId, new String(encrypto(password, keyTest, ivTest)));
+			// 入力パスワードを暗号化するための設定
+			IvParameterSpec ivTest = new IvParameterSpec(rb.getString("crypto.iv.string").getBytes());
+			SecretKeySpec keyTest = new SecretKeySpec(rb.getString("crypto.key.string").getBytes(), "AES");
+			// ユーザーテーブルからデータ取得
+			user = loginService.selectUserPassword(userId, new String(encrypto(password, keyTest, ivTest)));
 		} catch (GeneralSecurityException e) {
-			// 入力パスワードの暗号化に失敗した場合	
+			// 入力パスワードの暗号化に失敗した場合
 			e.printStackTrace();
-			user = null;
 		}
 
-		//ユーザー情報取得チェック
+		// ユーザー情報取得チェック
 		if (user == null) {
 			// ユーザテーブルから情報を取得できなかった場合
-			redirectAttributes.addFlashAttribute("errorMessage", "ユーザIDかパスワードに誤りがあります。");
-			
+			redirectAttributes.addFlashAttribute("errorMessage", "ユーザIDまたはパスワードに誤りがあります。");
+
 			// ログイン画面を再表示
 			return "redirect:";
 		}
 
 		// 認証成功した場合
 		// ユーザー情報更新
-		if(!loginService.UpdateUserLastLoginAt(userId)){
+		if (!loginService.updateUserLastLoginAt(userId)) {
 			// 更新に失敗した場合
 			redirectAttributes.addFlashAttribute("errorMessage", "最終ログイン日時の更新に失敗しました。");
 			// ログイン画面を再表示
@@ -89,8 +89,7 @@ public class LoginController {
 		}
 		// セッション情報格納
 		sessionInfo.setUserId(user.getUserId());
-		sessionInfo.setLastName(user.getLastName());
-		sessionInfo.setFirstName(user.getFirstName());
+		sessionInfo.setFullName(user.getLastName() + user.getFirstName());
 		sessionInfo.setAuthorityNo(user.getAuthorityNo());
 		sessionInfo.setUsersGroupId(user.getUsersGroupId());
 
@@ -103,9 +102,10 @@ public class LoginController {
 
 	/**
 	 * 文字列の暗号化
+	 * 
 	 * @param plainText 入力文字列
-	 * @param key 暗号化Key
-	 * @param iv IV
+	 * @param key       暗号化Key
+	 * @param iv        IV
 	 * @return 暗号化文字列
 	 * @throws GeneralSecurityException 例外
 	 */
@@ -119,18 +119,19 @@ public class LoginController {
 
 	/**
 	 * 文字列の復号化
+	 * 
 	 * @param cryptoText 入力文字列
-	 * @param key 暗号化Key
-	 * @param iv IV
+	 * @param key        暗号化Key
+	 * @param iv         IV
 	 * @return 復号化文字列
 	 * @throws GeneralSecurityException 例外
 	 */
-	public String decrypto(byte[] cryptoText, SecretKey key, IvParameterSpec iv) throws GeneralSecurityException {			
-			
-        // 書式:"アルゴリズム/ブロックモード/パディング方式"			
-        Cipher decrypter = Cipher.getInstance("AES/CBC/PKCS5Padding");			
-        decrypter.init(Cipher.DECRYPT_MODE, key, iv);			
-			
-        return new String(decrypter.doFinal(cryptoText));			
+	public String decrypto(byte[] cryptoText, SecretKey key, IvParameterSpec iv) throws GeneralSecurityException {
+
+		// 書式:"アルゴリズム/ブロックモード/パディング方式"
+		Cipher decrypter = Cipher.getInstance("AES/CBC/PKCS5Padding");
+		decrypter.init(Cipher.DECRYPT_MODE, key, iv);
+
+		return new String(decrypter.doFinal(cryptoText));
 	}
 }

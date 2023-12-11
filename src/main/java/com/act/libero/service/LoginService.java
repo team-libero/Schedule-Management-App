@@ -37,7 +37,7 @@ public class LoginService {
      * return 更新結果（true：成功、false：失敗）
      */
     @Transactional(rollbackFor=Exception.class)
-    public boolean UpdateUserLastLoginAt(String userId) {
+    public boolean updateUserLastLoginAt(String userId) {
         try {
             return userMapper.updateUserLastLoginAt(userId);
         } catch (Exception e) {
