@@ -10,7 +10,7 @@ import com.act.libero.repository.UserMapper;
 @Service
 public class LoginService {
 
-   /**
+    /**
      * ユーザー情報 Mapper
      */
     @Autowired
@@ -28,7 +28,7 @@ public class LoginService {
      * 最終ログイン日時更新
      * return 更新結果（true：成功、false：失敗）
      */
-    @Transactional(rollbackFor=Exception.class)
+    @Transactional(rollbackFor = Exception.class)
     public boolean updateUserLastLoginAt(String userId) {
         try {
             return userMapper.updateUserLastLoginAt(userId);
@@ -38,4 +38,3 @@ public class LoginService {
         }
     }
 }
-
