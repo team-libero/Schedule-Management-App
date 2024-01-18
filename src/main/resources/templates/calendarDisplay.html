@@ -7,7 +7,7 @@
     <title>カレンダー表示画面</title>
 </head>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script th:src="@{/js/calendarDisplay.js}"></script> 
+<script th:src="@{/js/calendarDisplay.js}"></script>
 
 <body style="margin: 0px;">
     <div class="main_contents">
@@ -25,123 +25,40 @@
                 </div>
             </div>
             <div class="contents">
-                <select name="year">
-                    <option value="2023">2023年</option>
-                    <option value="2022">2022年</option>
-                    <option value="2021">2021年</option>
-                    <option value="2020">2020年</option>
+                <select id="select_year" name="year" onchange="selectYearChange()">
                 </select>
             </div>
             <div class="contents">
-                <p class="back_month">＜＜</p>
-                <select id="moonth" name="month">
-                    <option value="1">1月</option>
-                    <option value="2">2月</option>
-                    <option value="3">3月</option>
-                    <option value="4">4月</option>
-                    <option value="5">5月</option>
-                    <option value="6">6月</option>
-                    <option value="7">7月</option>
-                    <option value="8">8月</option>
-                    <option value="9">9月</option>
-                    <option value="10">10月</option>
-                    <option value="11">11月</option>
-                    <option value="12">12月</option>
+                <p class="back_month" onclick="back_month()">＜＜</p>
+                <select id="select_month" name="month" onchange="selectMonthChange()">
                 </select>
-                <p class="next_month">＞＞</p>
+                <p class="next_month" onclick="next_month()">＞＞</p>
             </div>
             <div id="calendar">
-                <table class="calendar">
-                    <tbody>
-                        <tr>
-                            <th style="color: red;">SUN</th>
-                            <th>MON</th>
-                            <th>TUE</th>
-                            <th>WED</th>
-                            <th>THU</th>
-                            <th>FRI</th>
-                            <th style="color: blue;">SAT</th>
-                        </tr>
-                        <tr class="day">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                        </tr>
-                        <tr class="day">
-                            <td>4</td>
-                            <td>5</td>
-                            <td>6</td>
-                            <td>7</td>
-                            <td>8</td>
-                            <td>9</td>
-                            <td>10</td>
-                        </tr>
-                        <tr class="day">
-                            <td>11</td>
-                            <td>12</td>
-                            <td>13</td>
-                            <td>14</td>
-                            <td>15</td>
-                            <td>16</td>
-                            <td>17</td>
-                        </tr>
-                        <tr class="day">
-                            <td>18</td>
-                            <td>19</td>
-                            <td>20</td>
-                            <td>21</td>
-                            <td>22</td>
-                            <td>23</td>
-                            <td>24</td>
-                        </tr>
-                        <tr class="day">
-                            <td>25</td>
-                            <td>26</td>
-                            <td>27</td>
-                            <td>28</td>
-                            <td>29</td>
-                            <td>30</td>
-                            <td>31</td>
-                        </tr>
-                        <tr class="day">
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                            <td>6</td>
-                            <td>7</td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
         <div class="table_contents" style="display: none;">
             <div class="table_contents_div" style="height: 100%;overflow: auto;">
                 <table>
                     <tbody>
-                        <tr>
-                            <td><a href="scheduleDetail.html">中帰社</a></td>
+                        <tr id="20231211">
+                            <td><a href="scheduleDetail.html">中帰社20231211</a></td>
                         </tr>
 
-                        <tr>
-                            <td><a href="scheduleDetail.html">中帰社</a></td>
+                        <tr id="20231208">
+                            <td><a href="scheduleDetail.html">中帰社20231208</a></td>
                         </tr>
-                        <tr>
-                            <td><a href="scheduleDetail.html">中帰社</a></td>
+                        <tr id="20231213">
+                            <td><a href="scheduleDetail.html">中帰社20231213</a></td>
                         </tr>
-                        <tr>
-                            <td><a href="scheduleDetail.html">中帰社</a></td>
+                        <tr id="20231211">
+                            <td><a href="scheduleDetail.html">中帰社20231211</a></td>
                         </tr>
-                        <tr>
-                            <td><a href="scheduleDetail.html">中帰社</a></td>
+                        <tr id="20231219">
+                            <td><a href="scheduleDetail.html">中帰社20231219</a></td>
                         </tr>
-                        <tr>
-                            <td><a href="scheduleDetail.html">中帰社</a></td>
+                        <tr id="20231201">
+                            <td><a href="scheduleDetail.html">中帰社20231201</a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -150,6 +67,5 @@
     </div>
     <div th:replace="common :: footer"></div>
 </body>
-<!--iframe src="../common/common.html" frameborder="0" style="width: 100%; position: absolute; bottom: 0px;"></iframe -->
 
 </html>
