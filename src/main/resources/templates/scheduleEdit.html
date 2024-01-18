@@ -8,38 +8,40 @@
 <script th:src="@{/js/scheduleEdit.js}"></script> 
 
 <body>
-    <form method="post" id="form">
+    <form action="#" th:action="@{/scheduleEdit/register}" th:object="${items}" method="post" id="form">
         <div class="parent_box">
             <div class="title_box">
                 <p>タイトル</p>
-                <input type="text" name="titile" th:value="${items.titleName != null ? items.titleName : ''}">
+                <input type="text" name="title" th:field="*{titleName}" th:value="${items.titleName != null ? items.titleName : ''}">
             </div>
             <p class="error error_title">タイトルは必須です</p>
         </div>
         <div class="parent_box">
             <div class="date_box">
-                <input type="date" name="from_date" th:value="${items.fromDateTime != null ? #dates.format(items.fromDateTime, 'yyyy-MM-dd') : ''}">
-                <input type="time" name="from_time" th:value="${items.fromDateTime != null ? #dates.format(items.fromDateTime, 'HH:mm') : ''}">
+                <input type="date" id="from_date" name="from_date" th:value="${items.fromDateTime != null ? #dates.format(items.fromDateTime, 'yyyy-MM-dd') : ''}">
+                <input type="time" id="from_time" name="from_time" th:value="${items.fromDateTime != null ? #dates.format(items.fromDateTime, 'HH:mm') : ''}">
+                <input type="hidden" id="fromDateTime" name="from_datetime" th:field="*{fromDateTime}"> 
                 <p>～</p>
-                <input type="date" name="to_date" th:value="${items.toDateTime != null ? #dates.format(items.toDateTime, 'yyyy-MM-dd') : ''}">
-                <input type="time" name="to_time" th:value="${items.toDateTime != null ? #dates.format(items.toDateTime, 'HH:mm') : ''}">
+                <input type="date" id="to_date" name="to_date" th:value="${items.toDateTime != null ? #dates.format(items.toDateTime, 'yyyy-MM-dd') : ''}">
+                <input type="time" id="to_time" name="to_time" th:value="${items.toDateTime != null ? #dates.format(items.toDateTime, 'HH:mm') : ''}">
+                <input type="hidden" id="toDateTime" name="to_datetime" th:field="*{toDateTime}"> 
             </div>
             <p class="error error_from">開始日時は必須です</p>
             <p class="error error_to">終了日時を正しく入力してください</p>
         </div>
         <div class="place_box">
             <p>場所</p>
-            <input type="text" name="place" th:value="${items.address != null ? items.address : ''}">
+            <input type="text" name="place" th:field="*{address}" th:value="${items.address != null ? items.address : ''}">
         </div>
         <div class="contents_box">
             <p>説明</p>
-            <textarea name="contents" rows="5" cols="400" th:text="${items.memo != null ? items.memo : ''}"></textarea>
+            <textarea name="contents" rows="5" cols="400" th:field="*{memo}" th:text="${items.memo != null ? items.memo : ''}"></textarea>
         </div>
         <div class="kbn_box" id ="kbn_box">
-            <input type="radio" id="kojin" name="kbn" value="0" th:checked="${!items.calendarType.equals('1')}">
+            <input type="radio" id="kojin" name="kbn" value="0" th:field="*{calendarType}" th:checked="${items.calendarType == null || items.calendarType.equals('0')}">
             <label for="kojin">個人</label>
 
-            <input type="radio" id="group" name="kbn" value="1" th:checked="${items.calendarType.equals('1')}">
+            <input type="radio" id="group" name="kbn" value="1" th:field="*{calendarType}" th:checked="${items.calendarType != null && items.calendarType.equals('1')}">
             <label for="group">グループ</label>
         </div>
         <div class="announce_box">

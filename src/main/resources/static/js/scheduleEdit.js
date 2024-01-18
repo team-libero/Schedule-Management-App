@@ -60,8 +60,15 @@ $(function () {
                 sucFlg = true;
             }
         }
+
+        var fdate = document.getElementById('from_date').value;
+        var ftime = document.getElementById('from_time').value;
+        document.getElementById('fromDateTime').value = fdate + ' ' + ftime;
+        var tdate = document.getElementById('to_date').value;
+        var ttime = document.getElementById('to_time').value;
+        document.getElementById('toDateTime').value = tdate + ' ' + ttime;
+
         if (sucFlg == false) {
-            $('#form').attr('action', '../html/scheduleDetail.html');
             $('#form').submit();
         } else {
             return false;

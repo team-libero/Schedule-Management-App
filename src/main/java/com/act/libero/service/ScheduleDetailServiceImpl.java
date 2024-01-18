@@ -113,7 +113,7 @@ public class ScheduleDetailServiceImpl implements ScheduleDetailService{
         dayOfweekFromStr = getDayOfWeek(fromDate);
         dayOfweekToStr = getDayOfWeek(toDate);
         // スケジュール区分
-        if (schedule.getGroupId() == null) {
+        if (schedule.getUsersGroupId() == null) {
             scheduleKbn = "個人スケジュール";
         } else {
             scheduleKbn = "グループスケジュール";
@@ -122,7 +122,7 @@ public class ScheduleDetailServiceImpl implements ScheduleDetailService{
         editData.setTitleName(schedule.getTitleName());
         editData.setAddress(schedule.getAddress());
         editData.setMemo(schedule.getMemo());
-        editData.setGroupId(schedule.getGroupId());
+        editData.setGroupId(schedule.getUsersGroupId());
         editData.setLastName(schedule.getLastName());
         editData.setFirstName(schedule.getFirstName());
         editData.setUserId(schedule.getUserId());

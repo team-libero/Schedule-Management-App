@@ -34,7 +34,7 @@ public class ScheduleDetailController {
 
   public String scheduleDetail(@ModelAttribute ScheduleInfo scheduleInfo, Model model,
       @RequestParam("scheduleId") int scheduleId, @RequestParam("scheduleYMD") String scheduleYMD,
-      @RequestParam("calendarType") String calendarType, RedirectAttributes redirectAttrs, HttpSession session) {
+      @RequestParam("calendarType") String calendarType, HttpSession session) {
 
     // Service呼び出し
     ScheduleInfo output = scheduleDetailService.selectSchedule(scheduleId, scheduleYMD, calendarType, session);

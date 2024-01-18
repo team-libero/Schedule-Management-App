@@ -18,7 +18,7 @@ public class Schedule {
     /** 説明 */
     private String memo;
     /** グループID */
-    private Integer groupId;
+    private Integer usersGroupId;
     /** 姓 */
     private String lastName;
     /** 名 */

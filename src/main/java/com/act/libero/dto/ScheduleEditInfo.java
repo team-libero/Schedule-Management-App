@@ -10,7 +10,11 @@ public class ScheduleEditInfo implements Serializable {
     private int scheduleId;
     private int groupId;
     private String titleName;
+    private Date fromDate;
+    private Date fromTime;
     private Date fromDateTime;
+    private Date toDate;
+    private Date toTime;
     private Date toDateTime;
     private String address;
     private String memo;

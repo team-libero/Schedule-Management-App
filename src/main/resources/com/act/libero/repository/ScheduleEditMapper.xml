@@ -10,4 +10,56 @@
         WHERE schedule_id = #{scheduleId}
     </select>
 
+    <insert id="register">
+        INSERT INTO schedule
+        (
+            schedule_id,
+            users_group_id,
+            user_id,
+            title_name,
+            from_date_time,
+            to_date_time,
+            address,
+            memo,
+            announce_flag,
+            created_user_id,
+            created_at,
+            updated_at,
+            delete_flag,
+            deleted_at
+        )
+        VALUES
+        (
+            #{scheduleId},
+            #{groupId},
+            #{userId},
+            #{titleName},
+            #{fromDateTime},
+            #{toDateTime},
+            #{address},
+            #{memo},
+            #{announceFlag},
+            #{userId},
+            CURRENT_TIMESTAMP(),
+            CURRENT_TIMESTAMP(),
+            '0',
+            null
+        )
+
+    </insert>
+
+    <update id="edit">
+        UPDATE schedule
+        SET users_group_id = null,
+            title_name = #{titleName},
+            from_date_time = #{fromDateTime},
+            to_date_time = #{toDateTime},
+            address = #{address},
+            memo = #{memo},
+            announce_flag = #{announceFlag},
+            updated_user_id = #{userId},
+            updated_at = CURRENT_TIMESTAMP()
+        WHERE schedule_id = #{scheduleId}
+    </update>
+
 </mapper>

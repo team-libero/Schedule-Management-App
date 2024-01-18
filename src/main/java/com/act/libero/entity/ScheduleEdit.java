@@ -11,8 +11,8 @@ public class ScheduleEdit {
     private int groupId;
     private String userId;
     private String titleName;
-    private Date fromDateTime;
-    private Date toDateTime;
+    private String fromDateTime;
+    private String toDateTime;
     private String address;
     private String memo;
     private int announceFlag;

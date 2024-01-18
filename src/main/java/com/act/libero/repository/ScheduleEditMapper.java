@@ -7,4 +7,8 @@ import com.act.libero.entity.ScheduleEdit;
 @Mapper
 public interface ScheduleEditMapper {
     ScheduleEdit getScheduleInfo (int scheduleId);
+
+    void edit (ScheduleEdit scheduleEdit);
+
+    void register (ScheduleEdit scheduleEdit);
 }
