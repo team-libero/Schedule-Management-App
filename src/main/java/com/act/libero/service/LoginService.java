@@ -20,20 +20,12 @@ public class LoginService {
      * ユーザー情報取得
      * return 検索結果
      */
-    public User selectUser(String userId) {
-        return userMapper.selectUser(userId);
+    public User selectUserByPassword(String userId, String encryptedPassword) {
+        return userMapper.selectUserByPassword(userId, encryptedPassword);
     }
 
     /**
-     * ユーザー情報取得
-     * return 検索結果
-     */
-    public User selectUserPassword(String userId, String encryptedPassword) {
-        return userMapper.selectUserPassword(userId, encryptedPassword);
-    }
-
-    /**
-     * ユーザー情報更新
+     * 最終ログイン日時更新
      * return 更新結果（true：成功、false：失敗）
      */
     @Transactional(rollbackFor=Exception.class)
@@ -41,22 +33,6 @@ public class LoginService {
         try {
             return userMapper.updateUserLastLoginAt(userId);
         } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    /**
-     * ユーザー情報登録
-     * return 登録結果（true：成功、false：失敗）
-     */
-    @Transactional(rollbackFor=Exception.class)
-    public boolean insertUser(User user) {
-        try {
-            userMapper.insertUser(user);
-            return true;
-        } catch (Exception e) {
-            // model.addAttribute("errorMessage", "最終ログイン日時の更新に失敗しました。");
             e.printStackTrace();
             return false;
         }

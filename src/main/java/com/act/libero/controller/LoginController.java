@@ -64,7 +64,7 @@ public class LoginController {
 			IvParameterSpec ivTest = new IvParameterSpec(rb.getString("crypto.iv.string").getBytes());
 			SecretKeySpec keyTest = new SecretKeySpec(rb.getString("crypto.key.string").getBytes(), "AES");
 			// ユーザーテーブルからデータ取得
-			user = loginService.selectUserPassword(userId, new String(encrypto(password, keyTest, ivTest)));
+			user = loginService.selectUserByPassword(userId, new String(encrypto(password, keyTest, ivTest)));
 		} catch (GeneralSecurityException e) {
 			// 入力パスワードの暗号化に失敗した場合
 			e.printStackTrace();
@@ -80,23 +80,23 @@ public class LoginController {
 		}
 
 		// 認証成功した場合
-		// ユーザー情報更新
+		// 最終ログイン日時を更新
 		if (!loginService.updateUserLastLoginAt(userId)) {
 			// 更新に失敗した場合
 			redirectAttributes.addFlashAttribute("errorMessage", "最終ログイン日時の更新に失敗しました。");
 			// ログイン画面を再表示
 			return "redirect:";
 		}
-		// セッション情報格納
+		// セッションにユーザ情報を格納
 		sessionInfo.setUserId(user.getUserId());
 		sessionInfo.setFullName(user.getLastName() + user.getFirstName());
 		sessionInfo.setAuthorityNo(user.getAuthorityNo());
 		sessionInfo.setUsersGroupId(user.getUsersGroupId());
 
-		// カレンダー種別を遷移先コントローラへ渡す()
+		// カレンダー種別を遷移先へ渡す
 		redirectAttributes.addFlashAttribute("calendarSBT", "0");
 
-		// 次画面に遷移
+		// カレンダー表示画面に遷移
 		return "redirect:calendarDisplay";
 	}
 

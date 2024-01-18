@@ -4,19 +4,19 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.act.libero.repository.UserMapper">
 
-    <!-- 検索 -->
+<!-- 検索 -->
     <select id="selectUser" resultType="com.act.libero.entity.User">
         SELECT * FROM users WHERE user_id = #{userId}
     </select>
 
-    <!-- 検索（ユーザーID,パスワード） -->
-    <select id="selectUserPassword" resultType="com.act.libero.entity.User">
+    <!-- ユーザ情報取得（ユーザーID,パスワード） -->
+    <select id="selectUserByPassword" resultType="com.act.libero.entity.User">
         SELECT 
-            user_id
-            ,last_name
-            ,first_name
-            ,authority_no
-            ,users_group_id
+            user_id,
+            last_name,
+            first_name,
+            authority_no,
+            users_group_id
         FROM
             users
         WHERE
@@ -25,77 +25,16 @@
             AND delete_flag = '0'
     </select>
 
-     <!-- 検索（グループID） -->
-    <select id="selectUserList" resultType="com.act.libero.entity.User">
-        SELECT 
-            users_group.users_group_name
-            ,users.user_id
-            ,users.last_name
-            ,users.first_name
-            ,users.updated_at
-        FROM
-            users
-        INNER JOIN
-            users_group
-        ON
-            users_group.users_group_id = users.users_group_id
-        WHERE
-            users_group.users_group_id = #{groupId}
-            AND users_group.delete_flag = 0
-            AND users.delete_flag = 0
-        ORDER BY
-            users.authority_no ASC
-            ,users.created_at ASC
-           
-    </select>
-
-    <!-- 更新（最終ログイン日時） -->
+    <!-- 最終ログイン日時更新 -->
     <update id="updateUserLastLoginAt">
         UPDATE
             users
         SET
-            last_login_at = CURRENT_TIMESTAMP
-            ,updated_user_id = #{userId}
-            ,updated_at = CURRENT_TIMESTAMP
+            last_login_at = CURRENT_TIMESTAMP(),
+            updated_user_id = #{userId},
+            updated_at = CURRENT_TIMESTAMP()
         WHERE
             user_id = #{userId}
     </update>
-
-    <insert id="insertUser" parameterType="com.act.libero.entity.User">
-        INSERT INTO users
-        (
-            user_id
-            ,last_name
-            ,first_name
-            ,authority_no
-            ,users_group_id
-            ,email
-            ,password
-            ,last_login_at
-            ,delete_flag
-            ,deleted_at
-            ,created_user_id
-            ,created_at
-            ,updated_user_id
-            ,updated_at
-        )
-        VALUES
-        (
-            #{user.userId}
-            ,#{user.lastName}
-            ,#{user.firstName}
-            ,#{user.authorityNo}
-            ,#{user.usersGroupId}
-            ,#{user.email}
-            ,#{user.password}
-            ,#{user.lastLoginAt}
-            ,#{user.deleteFlag}
-            ,#{user.deletedAt}
-            ,#{user.createdUserId}
-            ,CURRENT_TIMESTAMP
-            ,#{user.updatedUserId}
-            ,CURRENT_TIMESTAMP
-        )
-    </insert>
 
 </mapper>
