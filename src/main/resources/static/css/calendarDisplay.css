@@ -95,7 +95,7 @@ body {
 }
 
 .table_contents{
-    display: none;
+    /*display: none;*/
     border-top: 2vw dashed green;
     height: 46vw;
 }
