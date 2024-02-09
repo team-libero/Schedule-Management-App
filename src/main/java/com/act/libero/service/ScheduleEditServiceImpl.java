@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.act.libero.dto.ScheduleEditInfo;
 import com.act.libero.entity.ScheduleEdit;
 import com.act.libero.repository.ScheduleEditMapper;
+import com.act.libero.util.ScheduleEditConst;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -55,6 +56,7 @@ public class ScheduleEditServiceImpl implements ScheduleEditService {
         result.setFromDateTime(dates);
         result.setToDateTime(dates);
         result.setCalendarType(calendarType);
+        editFlg = false;
         return result;
     }
 
@@ -65,19 +67,28 @@ public class ScheduleEditServiceImpl implements ScheduleEditService {
     public String register(ScheduleEdit scheduleEdit, HttpSession session) {
         // 編集
         session.setAttribute("userId", "test111");
-        int scheduleId = (int) session.getAttribute("scheduleId");
         String userId = session.getAttribute("userId").toString();
-        scheduleEdit.setScheduleId(scheduleId);
         scheduleEdit.setUserId(userId);
         scheduleEdit.setCreatedUserId(userId);
         scheduleEdit.setUpdatedUserId(userId);
         if (editFlg) {
+            int scheduleId = (int) session.getAttribute("scheduleId");
+            scheduleEdit.setScheduleId(scheduleId);
+            try {
             scheduleEditMapper.edit(scheduleEdit);
-        // 登録
+            } catch(Exception e) {
+                return ScheduleEditConst.EDIT_FAIL;
+            }
+            return ScheduleEditConst.EDIT_SUCCSESS;
+            // 登録
         } else {
+            try {
             scheduleEditMapper.register(scheduleEdit);
+            } catch(Exception e) {
+                return ScheduleEditConst.REGIST_FAIL;
+            }
+            return ScheduleEditConst.REGIST_SUCCSESS;
         }
-        return null;
     }
 
     /**

@@ -28,24 +28,16 @@ public class ScheduleDetailServiceImpl implements ScheduleDetailService{
      * return 検索結果
      */
     @Override
-    public ScheduleInfo selectSchedule(int scheduleId, String scheduleYMD, String calendarType, HttpSession session) {
+    public ScheduleInfo selectSchedule(int scheduleId, HttpSession session) {
 
         Schedule schedule = scheduleMapper.selectSchedule(scheduleId);
         if (schedule == null) {
-            ScheduleInfo errScheduleInfo = new ScheduleInfo();
-            errScheduleInfo.setScheduleYmd(scheduleYMD);
-            errScheduleInfo.setErrMsg("対象のスケジュールがすでに削除されたか更新されています。");
-            errScheduleInfo.setCalendarType(calendarType);
-            return errScheduleInfo;
+            return null;
         }
         // 項目編集
         ScheduleInfo scheduleTmp = editItem(schedule);
         session.setAttribute("updDate",scheduleTmp.getUpdatedAt());
         scheduleTmp.setScheduleId(scheduleId);
-        scheduleTmp.setScheduleYmd(scheduleYMD);
-        scheduleTmp.setCalendarType(calendarType);
-        session.setAttribute("scheduleYMD", scheduleYMD);
-        session.setAttribute("calendarType", calendarType);
 
         return scheduleTmp;
     }

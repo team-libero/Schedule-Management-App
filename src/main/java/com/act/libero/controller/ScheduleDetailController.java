@@ -33,17 +33,17 @@ public class ScheduleDetailController {
   @GetMapping(value = "/scheduleDetail")
 
   public String scheduleDetail(@ModelAttribute ScheduleInfo scheduleInfo, Model model,
-      @RequestParam("scheduleId") int scheduleId, @RequestParam("scheduleYMD") String scheduleYMD,
-      @RequestParam("calendarType") String calendarType, HttpSession session) {
+      @RequestParam("scheduleId") int scheduleId, @RequestParam(name = "scheduleYMD",required = false) String scheduleYMD,
+      @RequestParam(name = "calendarType",required = false) String calendarType, RedirectAttributes redirectAttributes, HttpSession session) {
 
     // Service呼び出し
-    ScheduleInfo output = scheduleDetailService.selectSchedule(scheduleId, scheduleYMD, calendarType, session);
+    ScheduleInfo output = scheduleDetailService.selectSchedule(scheduleId, session);
 
-    if (!StringUtils.isEmpty(output.getErrMsg())) {
-      model.addAttribute("scheduleYMD", scheduleYMD);
-      model.addAttribute("calendarType", calendarType);
-      model.addAttribute("errMsg", output.getErrMsg());
-      return "forward:calendarDisplay";
+    if (output == null) {
+      redirectAttributes.addAttribute("scheduleYMD", scheduleYMD);
+      redirectAttributes.addAttribute("calendarType", calendarType);
+      model.addAttribute("errMsg", "対象のスケジュールがすでに削除されたか更新されています。");
+      return "redirect:/calendarDisplay";
     }
     model.addAttribute("scheduleInfo", output);
     return "scheduleDetail";
@@ -79,22 +79,9 @@ public class ScheduleDetailController {
     } catch (Exception e) {
       model.addAttribute("errMsg", "削除に失敗しました。時間をおいてお試しください。");
     }
-    model.addAttribute("scheduleYMD", scheduleYMD);
-    model.addAttribute("calendarType", calendarType);
+    redirectAttributes.addAttribute("scheduleYMD", scheduleYMD);
+    redirectAttributes.addAttribute("calendarType", calendarType);
     return "redirect:/calendarDisplay";
   }
 
-  // /**
-  //  * スケジュール編集画面へ進む
-  //  * 
-  //  * @param model Model
-  //  * @return スケジュール編集画面
-  //  */
-  // @GetMapping(value = "/scheduleDetail/edit")
-  // public String editSchedule(Model model, @RequestParam("scheduleId") int scheduleId,
-  //     @RequestParam("calendarType") String calendarType) {
-  //   model.addAttribute("scheduleId", scheduleId);
-  //   model.addAttribute("calendarType", calendarType);
-  //   return "forward:scheduleEdit";
-  // }
 }
