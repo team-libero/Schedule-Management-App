@@ -31,8 +31,8 @@ public class UserEditService {
      * ユーザー情報 存在チェック
      * return 検索結果
      */
-    public User serectUserUpdatedAt(String userId, Date updatedAt) {
-        return userMapper.serectUserUpdatedAt(userId, updatedAt);
+    public User selectUserUpdatedAt(String userId, Date updatedAt) {
+        return userMapper.selectUserUpdatedAt(userId, updatedAt);
     }
 
     /**

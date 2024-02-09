@@ -32,7 +32,7 @@
            
     </select>
 
-    <!-- 検索（ユーザーID,更新日） -->
+    <!-- 存在チェック -->
     <select id="serectUserUpdatedAt" resultType="com.act.libero.entity.User">
         SELECT 
             user_id
@@ -40,8 +40,31 @@
             users
         WHERE
             user_id = #{userId}
-            AND delete_flag = '0'
+            AND delete_flag = 0
             AND updated_at = #{updatedAt}
+    </select>
+
+    <!-- 選択ユーザの削除 -->
+    <update id="deleteUserEditInfo" parameterType="com.act.libero.entity.User">
+        UPDATE
+            users
+        SET
+            delete_flag = 1
+            ,delete_at = CURRENT_TIMESTAMP
+        WHERE
+            user_id = #{userId}
+            AND delete_flag = 0
+    </update>
+
+    <!-- 排他制御の実施 -->
+    <select id="selectUserUpdatedAt" resultType="com.act.libero.entity.User">
+        SELECT 
+            user_id
+        FROM
+            users
+        WHERE
+            delete_flag = 0
+            AND (user_id = #{userId} OR email = #{email})
     </select>
 
     <!-- 更新（ユーザー編集情報） -->
@@ -59,7 +82,7 @@
             ,updated_at = CURRENT_TIMESTAMP
         WHERE
             user_id = #{userId}
-            AND delete_flag = '0'
+            AND delete_flag = 0
             AND updated_at = #{updated_at}
     </update>
 

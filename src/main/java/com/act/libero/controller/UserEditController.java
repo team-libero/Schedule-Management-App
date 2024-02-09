@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.act.libero.dto.SessionInfo;
@@ -23,7 +24,7 @@ public class UserEditController {
 	@Autowired
     UserEditService userEditService;
 
-       /**
+  /**
    * ユーザー情報登録画面を表示
    * @param model Model
    * @return ユーザー情報登録画面
@@ -65,13 +66,13 @@ public class UserEditController {
    * @param model Model
    * @return ユーザー情報編集画面
    */
-  @GetMapping(value = "/editUser")
+  @PostMapping(value = "/editUser")
     public String editUser(@ModelAttribute UserEditInfo userEditInfo, RedirectAttributes redirectAttributes, Model model) {
 
     // String userId = sessionInfo.getUserId();
 
     // ユーザー情報 存在チェック
-    User user = userEditService.serectUserUpdatedAt(sessionInfo.getUserId(), userEditInfo.getUpdatedAt());
+    User user = userEditService.selectUserUpdatedAt(sessionInfo.getUserId(), userEditInfo.getUpdatedAt());
     if (user == null) {
       // ユーザテーブルから情報を取得できなかった場合
 			redirectAttributes.addFlashAttribute("errorMessage", "対象のユーザが存在しません。もう一度やり直してください。");

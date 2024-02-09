@@ -15,11 +15,12 @@
 <script th:src="@{/js/userEdit.js}"></script> 
 
 <body>
-    <form th:object="${UserEditInfo}" method="post" id="form">
+    <form th:action="@{/editUser}" th:object="${UserEditInfo}" method="post" id="form">
     <div id="title">ユーザ編集</div>
     <div class="contents">
         <p class="edit_error" style="display: none;">未入力の項目があります</p>
         <p class="pass_error" style="display: none;">パスワードに誤りがあります</p>
+        <p class="address_error" style="display: none;">メールアドレスに誤りがあります</p>
     </div>
     <table id="userEditTable">
         <tr>
@@ -63,7 +64,7 @@
         <input type="button" id="edit" value="編集">
     </div>
 
-    <input type="hidden" name="updatedAt" th:value="${userInfo.updatedAt}">
+    <!-- <input type="hidden" name="updatedAt" th:value="${userInfo.updated_at}"> -->
 
 </form>
 <div th:replace="common :: footer"></div>

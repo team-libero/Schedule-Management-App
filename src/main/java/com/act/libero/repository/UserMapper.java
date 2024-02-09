@@ -12,7 +12,7 @@ import com.act.libero.entity.User;
 public interface UserMapper {
     User selectUser(String userId);
 
-    User serectUserUpdatedAt(String userId, Date updatedAt);
+    User selectUserUpdatedAt(String userId, Date updatedAt);
 
     boolean updateUserEditInfo(UserEditInfo userEditInfo);
 

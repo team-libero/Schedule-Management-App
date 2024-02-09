@@ -89,7 +89,7 @@ input[type="button"]{
     margin-right: 3%;
 }
 
-.edit_error,.pass_error{
+.edit_error,.pass_error,.address_error{
     margin: 3px 0;
     color: red;
     font-size: 4vw;
