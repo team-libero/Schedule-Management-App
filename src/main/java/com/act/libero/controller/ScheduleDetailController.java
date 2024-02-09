@@ -64,7 +64,6 @@ public class ScheduleDetailController {
     // 削除対象存在チェック
     boolean flg = scheduleDetailService.chkScheduleExist(scheduleId, session);
     if (!flg) {
-      redirectAttributes.addAttribute("scheduleId", scheduleId);
       redirectAttributes.addAttribute("scheduleYMD", scheduleYMD);
       redirectAttributes.addAttribute("calendarType", calendarType);
       model.addAttribute("scheduleYMD", scheduleYMD);

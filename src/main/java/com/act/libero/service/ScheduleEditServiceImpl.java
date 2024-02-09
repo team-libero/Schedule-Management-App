@@ -61,29 +61,29 @@ public class ScheduleEditServiceImpl implements ScheduleEditService {
     }
 
     /**
-     * 登録
+     * 登録ボタン押下時の処理
      */
     @Override
     public String register(ScheduleEdit scheduleEdit, HttpSession session) {
-        // 編集
-        session.setAttribute("userId", "test111");
+        session.setAttribute("userId", "test111"); //TODO 動確用
         String userId = session.getAttribute("userId").toString();
         scheduleEdit.setUserId(userId);
         scheduleEdit.setCreatedUserId(userId);
         scheduleEdit.setUpdatedUserId(userId);
+        // 編集
         if (editFlg) {
             int scheduleId = (int) session.getAttribute("scheduleId");
             scheduleEdit.setScheduleId(scheduleId);
             try {
-            scheduleEditMapper.edit(scheduleEdit);
+                scheduleEditMapper.edit(scheduleEdit);
             } catch(Exception e) {
                 return ScheduleEditConst.EDIT_FAIL;
             }
             return ScheduleEditConst.EDIT_SUCCSESS;
-            // 登録
+        // 登録
         } else {
             try {
-            scheduleEditMapper.register(scheduleEdit);
+                scheduleEditMapper.register(scheduleEdit);
             } catch(Exception e) {
                 return ScheduleEditConst.REGIST_FAIL;
             }
