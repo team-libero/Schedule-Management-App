@@ -2,7 +2,8 @@ package com.act.libero.controller;
 
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.thymeleaf.util.StringUtils;
+
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -62,7 +63,8 @@ public class ScheduleDetailController {
       @RequestParam("scheduleYMD") String scheduleYMD, @RequestParam("calendarType") String calendarType,HttpSession session) {
 
     // 削除対象存在チェック
-    boolean flg = scheduleDetailService.chkScheduleExist(scheduleId, session);
+    Date updDate = (Date)session.getAttribute("updDate");
+    boolean flg = scheduleDetailService.chkScheduleExist(scheduleId, updDate);
     if (!flg) {
       redirectAttributes.addAttribute("scheduleYMD", scheduleYMD);
       redirectAttributes.addAttribute("calendarType", calendarType);
@@ -74,7 +76,7 @@ public class ScheduleDetailController {
 
     // スケジュール削除
     try {
-      scheduleDetailService.deleteSchedule(scheduleId, session);
+      scheduleDetailService.deleteSchedule(scheduleId, updDate);
     } catch (Exception e) {
       model.addAttribute("errMsg", "削除に失敗しました。時間をおいてお試しください。");
     }

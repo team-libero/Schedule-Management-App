@@ -49,8 +49,7 @@ public class ScheduleDetailServiceImpl implements ScheduleDetailService{
      * @return true/falses
      */
     @Override
-    public boolean chkScheduleExist(int scheduleId, HttpSession session) {
-        Date updDate = (Date)session.getAttribute("updDate");
+    public boolean chkScheduleExist(int scheduleId, Date updDate) {
         Integer scheduleExistChk = scheduleMapper.chkScheduleExist(scheduleId, updDate);
         if (scheduleExistChk != 1) {
             return false;
@@ -64,8 +63,7 @@ public class ScheduleDetailServiceImpl implements ScheduleDetailService{
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteSchedule(int scheduleId, HttpSession session) {
-        Date updDate = (Date)session.getAttribute("updDate");
+    public void deleteSchedule(int scheduleId, Date updDate) {
         scheduleMapper.deleteSchedule(scheduleId, updDate);
     }
 
