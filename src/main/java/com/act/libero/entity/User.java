@@ -27,12 +27,12 @@ public class User {
     /** 削除日時 */
     private Date deletedAt;
     /** 作成ユーザ */
-    private String created_user_id;
+    private String createdUserId;
     /** 作成日 */
-    private Date created_at;
+    private Date createdAt;
     /** 更新ユーザ */
-    private String updated_user_id;
+    private String updatedUserId;
     /** 更新日 */
-    private Date updated_at;
+    private Date updatedAt;
 
 }

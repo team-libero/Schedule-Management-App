@@ -12,6 +12,10 @@ import com.act.libero.entity.User;
 public interface UserMapper {
     User selectUser(String userId);
 
+    User selectUserByPassword(String userId, String encryptedPassword);
+
+    boolean updateUserLastLoginAt(String userId);
+
     User selectUserUpdatedAt(String userId, Date updatedAt);
 
     boolean updateUserEditInfo(UserEditInfo userEditInfo);
