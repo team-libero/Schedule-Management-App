@@ -11,12 +11,24 @@ window.onload = function () {
 function back_month() {
     showDate.setMonth(showDate.getMonth() - 1);
     showProcess(showDate);
+    $.ajax({
+        url: "calendarDisplay",
+        type: 'POST',
+        timeout: 60000,
+        data: { showDate: showDate }
+    });
 }
 
 // 次の月表示
 function next_month() {
     showDate.setMonth(showDate.getMonth() + 1);
     showProcess(showDate);
+    $.ajax({
+        url: "calendarDisplay",
+        type: 'POST',
+        timeout: 60000,
+        data: { showDate: showDate }
+    });
 }
 
 // セレクトボックスから月を選択
@@ -27,6 +39,12 @@ function selectMonthChange() {
     showDate.setMonth(selectMonth - 1);
 
     showProcess(showDate);
+    $.ajax({
+        url: "calendarDisplay",
+        type: 'POST',
+        timeout: 60000,
+        data: { showDate: showDate }
+    });
 
 }
 // セレクトボックスから年を選択
@@ -37,6 +55,12 @@ function selectYearChange() {
     showDate.setMonth(selectMonth - 1);
 
     showProcess(showDate);
+    $.ajax({
+        url: "calendarDisplay",
+        type: 'POST',
+        timeout: 60000,
+        data: { showDate: showDate }
+    });
 }
 
 // カレンダー表示

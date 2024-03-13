@@ -9,6 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.act.libero.dto.ScheduleInfo;
 import com.act.libero.dto.ScheduleInfoList;
 import com.act.libero.dto.SessionInfo;
@@ -20,10 +27,10 @@ import jakarta.servlet.http.HttpSession;
 public class CalendarDisplayController {
 
 	@Autowired
-    CalendarDisplayService calendarDisplayService;
+	CalendarDisplayService calendarDisplayService;
 
 	@Autowired
-    ScheduleInfo scheduleInfo;
+	ScheduleInfo scheduleInfo;
 
 	@Autowired
 	SessionInfo sessionInfo;
@@ -31,87 +38,13 @@ public class CalendarDisplayController {
 	/*
 	 * 初期表示時
 	 * 選択日:現在日時
-     * スケジュール情報:DBから取得後セッションに格納（月単位）
+	 * スケジュール情報:DBから取得後セッションに格納（月単位）
 	 */
-    @GetMapping(value = "/calendarDisplay")
-	public String calendarInitDisplay(Model model) {
-	//public String calendarInitDisplay(Model model, @RequestParam("targetDate") String selectDate, HttpSession sessionInfo) {
-
-		// ↓↓↓↓↓↓↓↓セッションからユーザー情報を取得
-		// String userId = (String) sessionInfo.getAttribute("userId");
-		// String usersGroupId = (String) sessionInfo.getAttribute("usersGroupId");
-        String userId = "1";
-		Integer groupId = null;
-
-		// ↓↓↓↓↓↓↓↓パラメータから選択日を取得
-		// String targetDate = selectDate;
-		String targetDate = "20231109";
-
-		if (StringUtils.isEmpty(targetDate)) {
-			// パラメータの年月日が存在しない場合、今日日付をセット
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-			Date currentDate = new Date();
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(currentDate);
-			targetDate = sdf.format(currentDate);
-		}
-
-		// DBから対象スケジュール取得
-		List <ScheduleInfoList> scheduleInfoList = new ArrayList <ScheduleInfoList>();
-		scheduleInfoList = calendarDisplayService.selectTargetSchedule(userId, groupId, targetDate);
-
-		// 対象スケジュール情報をDTOにセット
-		scheduleInfo.setScheduleList(scheduleInfoList);
-		// スケジュール情報をセッションに設定
-		//sessionInfo.setAttribute("scheduleInfoList", scheduleInfoList);
-		// 選択日をセット
-		scheduleInfo.setTargetDate(targetDate);
-
-		model.addAttribute("scheduleInfo", scheduleInfo);
-
-		return "calendarDisplay";
-	}
-
-	// /*
-	//  * 日付クリック時
-	//  * 選択日:クリックした日時
-    //  * スケジュール情報:セッションから取得（月単位）
-	//  */
-	// @GetMapping(value = "/calendarDisplay/Redisp")
-	// public String calendarDisplayRedisp(Model model, RedirectAttributes redirectAttributes, @RequestParam("targetDate") String selectDate, HttpSession sessionInfo) {
-		
-	// 	// ↓↓↓↓↓↓↓↓セッションからユーザー情報を取得
-	// 	// String userId = (String) sessionInfo.getAttribute("userId");
-	// 	// String usersGroupId = (String) sessionInfo.getAttribute("usersGroupId");
-	// 	// String userId = "1";
-	// 	// Integer groupId = null;
-		
-	// 	// ↓↓↓↓↓↓↓↓パラメータから選択日を取得
-	// 	// String targetDate = selectDate;
-	// 	String targetDate = "20231101";
-
-	// 	// セッションから対象スケジュール取得
-	// 	List <ScheduleInfoList> scheduleInfoList = (List<ScheduleInfoList>) sessionInfo.getAttribute("scheduleInfoList");
-	
-	// 	// 対象スケジュール情報をDTOにセット
-	// 	scheduleInfo.setScheduleList(scheduleInfoList);
-
-	// 	// 選択日をセット
-	// 	scheduleInfo.setTargetDate(targetDate);
-
-	// 	model.addAttribute("scheduleInfo", scheduleInfo);
-
-	// 	return "calendarDisplay";
-	// }
-
-	/*
-	 * カレンダー切替時
-	 * 選択日:なし
-     * スケジュール情報:DBから取得後セッションに格納（月単位）
-	 */
-	@GetMapping(value = "/calendarDisplay/Switch")
-	public String calendarDisplaySwitch(Model model) {
-	//public String calendarDisplaySwitch(Model model, @RequestParam("targetMonth") String selectMonth, HttpSession sessionInfo) {
+	@GetMapping(value = "/calendarDisplay")
+	public String calendarInitDisplay(@ModelAttribute ScheduleInfo scheduleInfo, Model model,
+			@RequestParam(name = "targetDate", required = false) String targetDate,
+			@RequestParam(name = "showDate", required = false) Date showDate) {
+		// String selectDate, HttpSession sessionInfo) {
 
 		// ↓↓↓↓↓↓↓↓セッションからユーザー情報を取得
 		// String userId = (String) sessionInfo.getAttribute("userId");
@@ -119,22 +52,112 @@ public class CalendarDisplayController {
 		String userId = "1";
 		Integer groupId = null;
 
-		// ↓↓↓↓↓↓↓↓パラメータから選択年月を取得
-		String targetMonth = "202312";
+		String searchDate = "";
+
+		if (showDate != null) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(showDate);
+			searchDate = sdf.format(showDate);
+		}
+
+		if (showDate == null && StringUtils.isEmpty(targetDate)) {
+			// パラメータの年月日が存在しない場合、今日日付をセット
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			Date currentDate = new Date();
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(currentDate);
+			searchDate = sdf.format(currentDate);
+		}
 
 		// DBから対象スケジュール取得
-		List <ScheduleInfoList> scheduleInfoList = new ArrayList <ScheduleInfoList>();
-		scheduleInfoList = calendarDisplayService.selectTargetSchedule(userId, groupId, targetMonth);
-	
+		List<ScheduleInfoList> scheduleInfoList = new ArrayList<ScheduleInfoList>();
+		scheduleInfoList = calendarDisplayService.selectTargetSchedule(userId, groupId, searchDate);
+
 		// 対象スケジュール情報をDTOにセット
 		scheduleInfo.setScheduleList(scheduleInfoList);
-		// スケジュール情報をセッションから削除
-		((HttpSession) scheduleInfo).removeAttribute("scheduleInfoList");
 		// スケジュール情報をセッションに設定
-		//sessionInfo.setAttribute("scheduleInfoList", scheduleInfoList);
+		// sessionInfo.setAttribute("scheduleInfoList", scheduleInfoList);
+		// 選択日をセット
+		scheduleInfo.setTargetDate(searchDate);
 
 		model.addAttribute("scheduleInfo", scheduleInfo);
 
 		return "calendarDisplay";
 	}
+
+	/*
+	 * カレンダー切替時
+	 * 選択日:なし
+	 * スケジュール情報:DBから取得後セッションに格納（月単位）
+	 */
+	@PostMapping(value = "calendarDisplay/switch")
+	public String calendarDisplaySwitch(RedirectAttributes redirectAttributes, @ModelAttribute ScheduleInfo scheduleInfo,
+			Model model,
+			@RequestParam(name = "showDate", required = false) Date showDate) {
+		// String selectMonth, HttpSession sessionInfo) {
+
+		// ↓↓↓↓↓↓↓↓セッションからユーザー情報を取得
+		// String userId = (String) sessionInfo.getAttribute("userId");
+		// String usersGroupId = (String) sessionInfo.getAttribute("usersGroupId");
+		String userId = "1";
+		Integer groupId = null;
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(showDate);
+		String targetDate = sdf.format(showDate);
+
+		// DBから対象スケジュール取得
+		List<ScheduleInfoList> scheduleInfoList = new ArrayList<ScheduleInfoList>();
+		scheduleInfoList = calendarDisplayService.selectTargetSchedule(userId, groupId, targetDate);
+
+		// 対象スケジュール情報をDTOにセット
+		scheduleInfo.setScheduleList(scheduleInfoList);
+		// スケジュール情報をセッションから削除
+		// ((HttpSession) scheduleInfo).removeAttribute("scheduleInfoList");
+		// スケジュール情報をセッションに設定
+		// sessionInfo.setAttribute("scheduleInfoList", scheduleInfoList);
+
+		redirectAttributes.addFlashAttribute("scheduleInfo", scheduleInfo);
+		// model.addAttribute("scheduleInfo", scheduleInfo);
+
+		return "redirect:/calendarDisplay";
+	}
+
+	// /*
+	// * 日付クリック時
+	// * 選択日:クリックした日時
+	// * スケジュール情報:セッションから取得（月単位）
+	// */
+	// @GetMapping(value = "/calendarDisplay/redisp")
+	// public String calendarDisplayRedisp(Model model, RedirectAttributes
+	// redirectAttributes, @RequestParam("targetDate") String selectDate,
+	// HttpSession sessionInfo) {
+
+	// // ↓↓↓↓↓↓↓↓セッションからユーザー情報を取得
+	// // String userId = (String) sessionInfo.getAttribute("userId");
+	// // String usersGroupId = (String) sessionInfo.getAttribute("usersGroupId");
+	// // String userId = "1";
+	// // Integer groupId = null;
+
+	// // ↓↓↓↓↓↓↓↓パラメータから選択日を取得
+	// // String targetDate = selectDate;
+	// String targetDate = "20231101";
+
+	// // セッションから対象スケジュール取得
+	// List <ScheduleInfoList> scheduleInfoList = (List<ScheduleInfoList>)
+	// sessionInfo.getAttribute("scheduleInfoList");
+
+	// // 対象スケジュール情報をDTOにセット
+	// scheduleInfo.setScheduleList(scheduleInfoList);
+
+	// // 選択日をセット
+	// scheduleInfo.setTargetDate(targetDate);
+
+	// model.addAttribute("scheduleInfo", scheduleInfo);
+
+	// return "calendarDisplay";
+	// }
+
 }
