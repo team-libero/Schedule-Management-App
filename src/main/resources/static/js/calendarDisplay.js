@@ -12,7 +12,7 @@ function back_month() {
     showDate.setMonth(showDate.getMonth() - 1);
     showProcess(showDate);
     $.ajax({
-        url: "calendarDisplay",
+        url: "calendarDisplay/switch",
         type: 'POST',
         timeout: 60000,
         data: { showDate: showDate }
@@ -24,7 +24,7 @@ function next_month() {
     showDate.setMonth(showDate.getMonth() + 1);
     showProcess(showDate);
     $.ajax({
-        url: "calendarDisplay",
+        url: "calendarDisplay/switch",
         type: 'POST',
         timeout: 60000,
         data: { showDate: showDate }

@@ -37,13 +37,10 @@ public class CalendarDisplayController {
 
 	/*
 	 * 初期表示時
-	 * 選択日:現在日時
 	 * スケジュール情報:DBから取得後セッションに格納（月単位）
 	 */
 	@GetMapping(value = "/calendarDisplay")
-	public String calendarInitDisplay(@ModelAttribute ScheduleInfo scheduleInfo, Model model,
-			@RequestParam(name = "targetDate", required = false) String targetDate,
-			@RequestParam(name = "showDate", required = false) Date showDate) {
+	public String calendarInitDisplay(@ModelAttribute ScheduleInfo scheduleInfo, Model model) {
 		// String selectDate, HttpSession sessionInfo) {
 
 		// ↓↓↓↓↓↓↓↓セッションからユーザー情報を取得
@@ -52,34 +49,53 @@ public class CalendarDisplayController {
 		String userId = "1";
 		Integer groupId = null;
 
-		String searchDate = "";
+		// 今日日付をセット
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		Date currentDate = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(currentDate);
+		String searchDate = sdf.format(currentDate);
 
-		if (showDate != null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(showDate);
-			searchDate = sdf.format(showDate);
-		}
-
-		if (showDate == null && StringUtils.isEmpty(targetDate)) {
-			// パラメータの年月日が存在しない場合、今日日付をセット
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-			Date currentDate = new Date();
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(currentDate);
-			searchDate = sdf.format(currentDate);
-		}
-
-		// DBから対象スケジュール取得
+		// DBから現在月の対象スケジュール取得
 		List<ScheduleInfoList> scheduleInfoList = new ArrayList<ScheduleInfoList>();
 		scheduleInfoList = calendarDisplayService.selectTargetSchedule(userId, groupId, searchDate);
 
+		// 現在月のスケジュール情報をセッションに設定
+		sessionInfo.setScheduleInfoList(scheduleInfoList);
+
+		return "calendarDisplay";
+	}
+
+	/*
+	 * 日時選択時
+	 * スケジュール情報:DBから取得後セッションに格納（月単位）
+	 */
+	@GetMapping(value = "/calendarDisplay")
+	public String calendarInitDisplay(@ModelAttribute ScheduleInfo scheduleInfo, Model model,
+			@RequestParam(name = "targetDate", required = false) String targetDate) {
+		// String selectDate, HttpSession sessionInfo) {
+
+		// ↓↓↓↓↓↓↓↓セッションからユーザー情報、スケジュール情報を取得
+		// String userId = (String) sessionInfo.getAttribute("userId");
+		// String usersGroupId = (String) sessionInfo.getAttribute("usersGroupId");
+		List<ScheduleInfoList> scheduleInfoList = sessionInfo.getScheduleInfoList();
+
+		// String userId = "1";
+		// Integer groupId = null;
+
+		// DB検索用日付
+		// String searchDate = targetDate;
+
+		// DBから対象スケジュール取得
+		// List<ScheduleInfoList> scheduleInfoList = new ArrayList<ScheduleInfoList>();
+		// scheduleInfoList = calendarDisplayService.selectTargetSchedule(userId,
+		// groupId, searchDate);
+
 		// 対象スケジュール情報をDTOにセット
 		scheduleInfo.setScheduleList(scheduleInfoList);
-		// スケジュール情報をセッションに設定
-		// sessionInfo.setAttribute("scheduleInfoList", scheduleInfoList);
+
 		// 選択日をセット
-		scheduleInfo.setTargetDate(searchDate);
+		scheduleInfo.setTargetDate(targetDate);
 
 		model.addAttribute("scheduleInfo", scheduleInfo);
 
@@ -94,7 +110,8 @@ public class CalendarDisplayController {
 	@PostMapping(value = "calendarDisplay/switch")
 	public String calendarDisplaySwitch(RedirectAttributes redirectAttributes, @ModelAttribute ScheduleInfo scheduleInfo,
 			Model model,
-			@RequestParam(name = "showDate", required = false) Date showDate) {
+			@RequestParam(name = "targetDate", required = false) String targetDate,
+			@RequestParam(name = "targetDate", required = false) Date showDate) {
 		// String selectMonth, HttpSession sessionInfo) {
 
 		// ↓↓↓↓↓↓↓↓セッションからユーザー情報を取得
@@ -103,14 +120,11 @@ public class CalendarDisplayController {
 		String userId = "1";
 		Integer groupId = null;
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(showDate);
-		String targetDate = sdf.format(showDate);
+		String searchDate = targetDate;
 
 		// DBから対象スケジュール取得
 		List<ScheduleInfoList> scheduleInfoList = new ArrayList<ScheduleInfoList>();
-		scheduleInfoList = calendarDisplayService.selectTargetSchedule(userId, groupId, targetDate);
+		scheduleInfoList = calendarDisplayService.selectTargetSchedule(userId, groupId, searchDate);
 
 		// 対象スケジュール情報をDTOにセット
 		scheduleInfo.setScheduleList(scheduleInfoList);
