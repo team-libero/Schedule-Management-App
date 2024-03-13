@@ -18,47 +18,70 @@ $(function () {
     $('#submit').click(function () {
 
         $('.error').hide();
-        var titile = $('input[name="titile"]').val();
+        var title = $('input[name="titleName"]').val();
         var from_date = $('input[name="from_date"]').val();
         var from_time = $('input[name="from_time"]').val();
         var to_date = $('input[name="to_date"]').val();
         var to_time = $('input[name="to_time"]').val();
-
-        var from = new Date(from_date + from_time);
-        var to = new Date(to_date + to_time);
+        var address = $('input[name="address"]').val();
+        var memo = $('textarea[name="memo"]').val();
+        var kbn = $('input[name="calendarType"]').val();
 
         let sucFlg = false;
         //エラーの場合
-        if (titile == "") {
+        if (title == "") {
+            $('.error_title').text("タイトルを入力してください。");
             $('.title_box').parent().find('.error_title').show();
-            $('input[name="titile"]').addClass("error_tbox");
+            $('input[name="titleName"]').addClass("error_tbox");
+            sucFlg = true;
+        }
+        if (title.length > 100) {
+            $('.error_title').text("タイトルは100文字以内で入力してください。");
+            $('.title_box').parent().find('.error_title').show();
+            $('input[name="titleName"]').addClass("error_tbox");
             sucFlg = true;
         }
         if (from_date == "" || from_time == "") {
+            $('.error_from').text("スケジュール開始情報は全て選択してください。");
             $('.date_box').parent().find('.error_from').show();
             $('input[name="from_date"]').addClass("error_leftbox");
             $('input[name="from_time"]').addClass("error_rightbox");
             sucFlg = true;
         }
         if (to_date != "" && to_time == "") {
+            $('.error_to').text("スケジュール終了情報は全て選択、もしくは全て未選択にしてください。");
             $('.date_box').parent().find('.error_to').show();
             $('input[name="to_date"]').addClass("error_datebox");
             $('input[name="to_time"]').addClass("error_timebox");
             sucFlg = true;
         }
         if (to_date == "" && to_time != "") {
+            $('.error_to').text("スケジュール終了情報は全て選択、もしくは全て未選択にしてください。");
             $('.date_box').parent().find('.error_to').show();
             $('input[name="to_date"]').addClass("error_datebox");
             $('input[name="to_time"]').addClass("error_timebox");
             sucFlg = true;
         }
         if (to_date != "") {
-            if (from.getTime() > to.getTime()) {
+            if ((from_date > to_date) || (from_date == to_date && from_time > to_time)) {
+                $('.error_to').text("スケジュール終了情報はスケジュール開始日時以降にしてください。");
                 $('.date_box').parent().find('.error_to').show();
                 $('input[name="to_date"]').addClass("error_datebox");
                 $('input[name="to_time"]').addClass("error_timebox");
                 sucFlg = true;
             }
+        }
+        if (address.length > 100) {
+            $('.error_address').text("場所は100文字以内で入力してください。");
+            $('.place_box').parent().find('.error_address').show();
+            $('input[name="address"]').addClass("error_placebox");
+            sucFlg = true;
+        }
+        if (memo.length > 1000) {
+            $('.error_memo').text("説明は1000文字以内で入力してください。");
+            $('.contents_box').parent().find('.error_memo').show();
+            $('input[name="memo"]').addClass("error_contentsbox");
+            sucFlg = true;
         }
 
         var fdate = document.getElementById('from_date').value;

@@ -17,4 +17,7 @@ public interface ScheduleEditService {
 
     // 登録・編集
     String register(ScheduleEdit scheduleEdit, HttpSession session);
+
+    // LINE通知
+    String lineNotify(ScheduleEdit scheduleEdit);
 }

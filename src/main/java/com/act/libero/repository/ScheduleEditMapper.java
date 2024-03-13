@@ -11,4 +11,6 @@ public interface ScheduleEditMapper {
     void edit (ScheduleEdit scheduleEdit);
 
     void register (ScheduleEdit scheduleEdit);
+
+    String getLineToken (int groupId);
 }

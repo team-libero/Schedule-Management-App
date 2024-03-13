@@ -1,5 +1,12 @@
 package com.act.libero.service;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.URLEncoder;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -92,6 +99,31 @@ public class ScheduleEditServiceImpl implements ScheduleEditService {
     }
 
     /**
+     * LINE通知処理
+     */
+    @Override
+    public String lineNotify(ScheduleEdit scheduleEdit){
+        // メッセージ作成
+        String message = "\n【タイトル】" + scheduleEdit.getTitleName() + "\n【日時】" +
+        scheduleEdit.getFromDateTime() + "～" + scheduleEdit.getToDateTime() + "\n【場所】" +
+        scheduleEdit.getAddress() + "\n【説明】" + scheduleEdit.getMemo();
+
+        int groupId = scheduleEdit.getGroupId();
+        String token = scheduleEditMapper.getLineToken(groupId);
+        if (token.equals(null) || token.equals("")){
+            return "tokenError";
+        }
+        String apiUrl = "https://notify-api.line.me/api/notify";
+        try {
+            sendLineNotify(token, apiUrl, message);
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
      * 初期表示_編集 画面項目作成用
      */
     private ScheduleEditInfo createInitItem(ScheduleEdit se) {
@@ -116,5 +148,22 @@ public class ScheduleEditServiceImpl implements ScheduleEditService {
         items.setMemo(se.getMemo());
         items.setAnnounceFlag(se.getAnnounceFlag());
         return items;
+    }
+
+    /**
+     * LINE通知送信HTTPリクエストメソッド
+     */
+    private static void sendLineNotify(String token, String apiUrl, String message) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create(apiUrl))
+            .header("Authorization", "Bearer " + token)
+            .header("Content-Type", "application/x-www-form-urlencoded")
+            .POST(HttpRequest.BodyPublishers.ofString("message=" + URLEncoder.encode(message, StandardCharsets.UTF_8)))
+            .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        System.out.println(response.statusCode());
+        System.out.println(response.body());
     }
 }

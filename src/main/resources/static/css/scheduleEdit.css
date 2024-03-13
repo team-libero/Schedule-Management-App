@@ -41,6 +41,22 @@ form {
     right: 3vw;
 }
 
+.parent_box .error_address{
+    margin: 0px;
+    font-size: 3vw;
+    padding-left: 20vw;
+    position: absolute;
+    bottom: 0px;
+}
+
+.parent_box .error_memo{
+    margin: 0px;
+    font-size: 3vw;
+    padding-left: 20vw;
+    padding-top: 2vw;
+    bottom: 0px;
+}
+
 .error_tbox{
     border: 0.5vw solid red;
 }
@@ -55,6 +71,14 @@ form {
     border-top: 0.5vw solid red;
     border-bottom: 0.5vw solid red;
     border-right: 0.5vw solid red;
+}
+
+.error_placebox{
+    border: 0.5vw solid red;
+}
+
+.error_contentsbox{
+    border: 0.5vw solid red;
 }
 
 

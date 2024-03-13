@@ -41,14 +41,23 @@ public class ScheduleEditController {
 	}
 
 	@RequestMapping("/scheduleEdit/register")
-	public String scheduleRegister(@ModelAttribute ScheduleEdit scheduleEdit, Model model, RedirectAttributes redirectAttributes, HttpSession session) {
+	public String scheduleRegister(@ModelAttribute ScheduleEdit scheduleEdit, Model model, RedirectAttributes redirectAttributes, HttpSession session,
+	@RequestParam(name = "announce", required = false) Integer announceFlg) {
 		String flg = scheduleEditService.register(scheduleEdit, session);
+
 		model.addAttribute("scheduleId", scheduleEdit.getScheduleId());
 		// 編集の場合
 		if (flg.equals(ScheduleEditConst.EDIT_SUCCSESS) || flg.equals(ScheduleEditConst.EDIT_FAIL)) {
 			redirectAttributes.addAttribute("scheduleId",scheduleEdit.getScheduleId());
 			if(flg.equals(ScheduleEditConst.EDIT_FAIL)) {
 				model.addAttribute("errMsg", "更新に失敗しました。しばらくたってから再実施してください。");
+			}
+			if (flg.equals(ScheduleEditConst.EDIT_SUCCSESS) && announceFlg != null) {
+				// 編集が成功した場合、LINE通知処理を行う
+				String notifyErr = scheduleEditService.lineNotify(scheduleEdit);
+				if(notifyErr.equals("tokenError")){
+					model.addAttribute("errMsg", "LINE通知されませんでした。詳細は管理者にお問い合わせください。");
+				}
 			}
 			return "redirect:/scheduleDetail";
 		}
@@ -57,6 +66,14 @@ public class ScheduleEditController {
 		redirectAttributes.addAttribute("calendarType", session.getAttribute("calendarType"));
 		if(flg.equals(ScheduleEditConst.REGIST_FAIL)) {
 			model.addAttribute("errMsg", "登録に失敗しました。しばらくたってから再実施してください。");
+		}
+
+		if(flg.equals(ScheduleEditConst.REGIST_SUCCSESS) && announceFlg != null){
+			// 登録が成功した場合、LINE通知処理を行う
+			String notifyErr = scheduleEditService.lineNotify(scheduleEdit);
+			if(notifyErr.equals("tokenError")){
+				model.addAttribute("errMsg", "LINE通知されませんでした。詳細は管理者にお問い合わせください。");
+			}
 		}
 		return "redirect:/calendarDisplay";
 	}
