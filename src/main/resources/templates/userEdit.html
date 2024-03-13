@@ -8,7 +8,9 @@
     <title>ユーザ編集画面</title>
     <script th:inline="javascript">
         const userInfo = /*[[${userInfo}]]*/"userInfo";
+        const authorityNo = /*[[${authorityNo}]]*/"authorityNo";
         const insertFlg = /*[[${insertFlg}]]*/"insertFlg";
+        const errorMessage = /*[[${errorMessage}]]*/"errorMessage";
     </script>
 </head>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -18,14 +20,12 @@
     <form th:action="@{/editUser}" th:object="${UserEditInfo}" method="post" id="form">
     <div id="title">ユーザ編集</div>
     <div class="contents">
-        <p class="edit_error" style="display: none;">未入力の項目があります</p>
-        <p class="pass_error" style="display: none;">パスワードに誤りがあります</p>
-        <p class="address_error" style="display: none;">メールアドレスに誤りがあります</p>
+        <p class="edit_error" style="display: none;"></p>
     </div>
     <table id="userEditTable">
         <tr>
             <td id="table-left">ユーザID</td>
-            <td id="table-right"><input type="text" name="userid" th:value="${userInfo.userId}"></td>
+            <td id="table-right"><input type="text" name="userId" th:value="${userInfo.userId}"></td>
         </tr>
         <tr>
             <td id="table-left">姓</td>
@@ -64,7 +64,7 @@
         <input type="button" id="edit" value="編集">
     </div>
 
-    <!-- <input type="hidden" name="updatedAt" th:value="${userInfo.updated_at}"> -->
+    <!-- <input type="hidden" name="updatedAt" th:value="${#dates.format(userInfo.updatedAt)}"> -->
 
 </form>
 <div th:replace="common :: footer"></div>

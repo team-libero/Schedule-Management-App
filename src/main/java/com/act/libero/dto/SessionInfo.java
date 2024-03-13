@@ -1,5 +1,7 @@
 package com.act.libero.dto;
 
+import java.util.Date;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
@@ -21,5 +23,8 @@ public class SessionInfo {
     private int usersGroupId;
     /** グループ名 */
     private int usersGroupName;
+
+    /** 編集ユーザ更新日時 */
+    private Date editUserUpdatedAt;
     
 }

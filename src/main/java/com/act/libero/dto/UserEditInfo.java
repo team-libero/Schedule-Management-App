@@ -9,15 +9,15 @@ public class UserEditInfo {
     /** ユーザID */
     private String userId;
     /** 姓 */
-    private String lastName;
+    private String sei;
     /** 名 */
-    private String firstName;
+    private String mei;
     /** メールアドレス */
-    private String email;
+    private String address;
     /** パスワード */
-    private String password;
+    private String password1;
     /** パスワード(確認) */
-    private String passwordConfirm;
+    private String password2;
     /** 権限 */
     private int authorityNo;
     /** 更新日 */

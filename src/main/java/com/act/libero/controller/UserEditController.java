@@ -45,17 +45,22 @@ public class UserEditController {
    * @return ユーザー情報編集画面
    */
   @GetMapping(value = "/userEdit")
-    public String initUserEdit(@ModelAttribute UserInfo userInfo, Model model) {
+    public String initUserEdit(@ModelAttribute UserEditInfo userEditInfo, Model model) {
 
-    // String userId = sessionInfo.getUserId();
+    String userId = sessionInfo.getUserId();
     // デバッグコード
-    String userId = "abcde54321";
+    // String userId = "abcde54321";
 
     User user = userEditService.selectUser(userId);
 		model.addAttribute("userInfo", user);
 
+    // 権限（セッション）
+    model.addAttribute("authorityNo", sessionInfo.getAuthorityNo());
+
     // ユーザ登録画面表示フラグ：false
     model.addAttribute("insertFlg", false);
+
+    sessionInfo.setEditUserUpdatedAt(user.getUpdatedAt());
 
       return "userEdit";
 	}
@@ -72,7 +77,7 @@ public class UserEditController {
     // String userId = sessionInfo.getUserId();
 
     // ユーザー情報 存在チェック
-    User user = userEditService.selectUserUpdatedAt(sessionInfo.getUserId(), userEditInfo.getUpdatedAt());
+    User user = userEditService.selectUserUpdatedAt(sessionInfo.getUserId(), sessionInfo.getEditUserUpdatedAt());
     if (user == null) {
       // ユーザテーブルから情報を取得できなかった場合
 			redirectAttributes.addFlashAttribute("errorMessage", "対象のユーザが存在しません。もう一度やり直してください。");
@@ -83,6 +88,7 @@ public class UserEditController {
 
     // 更新ユーザーIDをユーザー編集情報に追加
     userEditInfo.setUpdatedUserId(sessionInfo.getUserId());
+    userEditInfo.setUpdatedAt(sessionInfo.getEditUserUpdatedAt());
     // ユーザー編集情報の更新
 		if(!userEditService.updateUserEditInfo(userEditInfo)){
 			// 更新に失敗した場合
