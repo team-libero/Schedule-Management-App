@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import com.act.libero.dto.UserInfo;
 import com.act.libero.entity.User;
 import com.act.libero.service.UserService;
-import java.util.List;
 
 @Controller
 public class UserEditController {

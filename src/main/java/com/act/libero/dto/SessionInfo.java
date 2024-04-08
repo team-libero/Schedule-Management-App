@@ -13,13 +13,13 @@ public class SessionInfo {
 
     /** ユーザID */
     private String userId;
-    /** 姓 */
-    private String lastName;
-    /** 名 */
-    private String firstName;
+    /** 氏名 */
+    private String fullName;
     /** 権限 */
     private int authorityNo;
     /** グループID */
     private int usersGroupId;
+    /** グループ名 */
+    private int usersGroupName;
     
 }

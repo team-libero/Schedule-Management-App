@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "crypto.iv.string",
+    "type": "java.lang.String",
+    "description": "A description for 'crypto.iv.string'"
+  },
+  {
+    "name": "crypto.key.string",
+    "type": "java.lang.String",
+    "description": "A description for 'crypto.key.string'"
+  }
+]}
