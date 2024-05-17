@@ -1,5 +1,13 @@
 package com.act.libero.controller;
 
+import java.security.GeneralSecurityException;
+import java.util.ResourceBundle;
+
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -89,6 +97,19 @@ public class UserEditController {
     // 更新ユーザーIDをユーザー編集情報に追加
     userEditInfo.setUpdatedUserId(sessionInfo.getUserId());
     userEditInfo.setUpdatedAt(sessionInfo.getEditUserUpdatedAt());
+
+    try {
+    // 設定ファイル(application.properties)の読み込み
+		ResourceBundle rb = ResourceBundle.getBundle("application");
+    // 入力パスワードを暗号化するための設定
+		IvParameterSpec ivTest = new IvParameterSpec(rb.getString("crypto.iv.string").getBytes());
+		SecretKeySpec keyTest = new SecretKeySpec(rb.getString("crypto.key.string").getBytes(), "AES");
+    userEditInfo.setEncryptedPassword(new String(encrypto(userEditInfo.getPassword1(), keyTest, ivTest)));
+    } catch (GeneralSecurityException e) {
+			// 入力パスワードの暗号化に失敗した場合
+			e.printStackTrace();
+		}
+
     // ユーザー編集情報の更新
 		if(!userEditService.updateUserEditInfo(userEditInfo)){
 			// 更新に失敗した場合
@@ -104,5 +125,22 @@ public class UserEditController {
       // 上記以外の場合、ユーザー編集画面へ遷移
       return "redirect:/userEdit";
     }
+	}
+
+  /**
+	 * 文字列の暗号化
+	 * 
+	 * @param plainText 入力文字列
+	 * @param key       暗号化Key
+	 * @param iv        IV
+	 * @return 暗号化文字列
+	 * @throws GeneralSecurityException 例外
+	 */
+	private byte[] encrypto(String plainText, SecretKey key, IvParameterSpec iv) throws GeneralSecurityException {
+		// 書式:"アルゴリズム/ブロックモード/パディング方式"
+		Cipher encrypter = Cipher.getInstance("AES/CBC/PKCS5Padding");
+
+		encrypter.init(Cipher.ENCRYPT_MODE, key, iv);
+		return encrypter.doFinal(plainText.getBytes());
 	}
 }

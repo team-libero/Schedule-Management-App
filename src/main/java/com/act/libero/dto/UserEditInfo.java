@@ -18,6 +18,8 @@ public class UserEditInfo {
     private String password1;
     /** パスワード(確認) */
     private String password2;
+    /** パスワード(暗号化) */
+    private String encryptedPassword;
     /** 権限 */
     private int authorityNo;
     /** 更新日 */

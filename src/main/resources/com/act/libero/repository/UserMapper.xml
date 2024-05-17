@@ -115,7 +115,7 @@
             ,first_name = #{mei}
             ,authority_no = #{authorityNo}
             ,email = #{address}
-            ,password = #{password1}
+            ,password = #{encryptedPassword}
             ,last_login_at = CURRENT_TIMESTAMP
             ,updated_user_id = #{updatedUserId}
             ,updated_at = CURRENT_TIMESTAMP

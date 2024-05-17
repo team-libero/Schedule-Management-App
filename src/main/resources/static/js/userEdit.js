@@ -45,7 +45,7 @@ $(function () {
     //編集押下
     $('#edit').click(function () {
 
-        var userId = $('input[name="userId"]').val();
+        // var userId = $('input[name="userId"]').val();
         var sei = $('input[name="sei"]').val();
         var mei = $('input[name="mei"]').val();
         var address = $('input[name="address"]').val();
@@ -98,6 +98,9 @@ $(function () {
             $('.edit_error').show();
             return;
         } else {
+            $('input[name=userId]').prop('disabled', false);
+            var userId = $('input[name="userId"]').val();
+
             // $('#form').attr('action', '../html/calendar.html');
             $('#form').submit();
         }
