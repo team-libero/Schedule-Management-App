@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.act.libero.dto.ScheduleEditInfo;
+import com.act.libero.dto.SessionInfo;
 import com.act.libero.entity.ScheduleEdit;
 import com.act.libero.repository.ScheduleEditMapper;
 import com.act.libero.util.ScheduleEditConst;
@@ -25,7 +26,7 @@ import jakarta.servlet.http.HttpSession;
 public class ScheduleEditServiceImpl implements ScheduleEditService {
 
     /**
-     * スケジュール情報情報 Mapper
+     * スケジュール情報 Mapper
      */
     @Autowired
     private ScheduleEditMapper scheduleEditMapper;
@@ -71,9 +72,8 @@ public class ScheduleEditServiceImpl implements ScheduleEditService {
      * 登録ボタン押下時の処理
      */
     @Override
-    public String register(ScheduleEdit scheduleEdit, HttpSession session) {
-        session.setAttribute("userId", "test111"); //TODO 動確用
-        String userId = session.getAttribute("userId").toString();
+    public String register(ScheduleEdit scheduleEdit, HttpSession session, SessionInfo sessionInfo) {
+        String userId = sessionInfo.getUserId();
         scheduleEdit.setUserId(userId);
         scheduleEdit.setCreatedUserId(userId);
         scheduleEdit.setUpdatedUserId(userId);

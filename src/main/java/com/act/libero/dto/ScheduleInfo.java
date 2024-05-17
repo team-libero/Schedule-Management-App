@@ -33,6 +33,8 @@ public class ScheduleInfo implements Serializable {
     private String firstName;
     /** ユーザID */
     private String userId;
+    /** 権限 */
+    private int auth;
     /** スケジュール区分 */
     private String scheduleKbn;
     /** 更新日 */

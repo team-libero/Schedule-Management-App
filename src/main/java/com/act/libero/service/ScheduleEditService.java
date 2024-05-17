@@ -1,8 +1,7 @@
 package com.act.libero.service;
 
-import java.util.Date;
-
 import com.act.libero.dto.ScheduleEditInfo;
+import com.act.libero.dto.SessionInfo;
 import com.act.libero.entity.ScheduleEdit;
 
 import jakarta.servlet.http.HttpSession;
@@ -16,7 +15,7 @@ public interface ScheduleEditService {
     ScheduleEditInfo initRegist(String date, String calendarType);
 
     // 登録・編集
-    String register(ScheduleEdit scheduleEdit, HttpSession session);
+    String register(ScheduleEdit scheduleEdit, HttpSession session, SessionInfo sessionInfo);
 
     // LINE通知
     String lineNotify(ScheduleEdit scheduleEdit);
