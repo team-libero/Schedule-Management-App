@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="common :: meta_footer('top',~{::link},~{::script})">
     <link th:href="@{/css/calendarDisplay.css}" rel="stylesheet">
@@ -29,7 +28,6 @@
                 </select>
             </div>
 
-
             <div class="contents">
                 <p class="back_month" onclick="back_month()">＜＜</p>
                 <select id="select_month" name="month" onchange="selectMonthChange()">
@@ -43,13 +41,19 @@
             <div class="table_contents_div" style="height: 100%;overflow: auto;">
                 <table>
                     <tbody>
-                        <tr th:each="schedule : ${scheduleInfo.scheduleList}">
-                            <th:block th:if="${schedule.fromDate eq scheduleInfo.targetDate}">
+                        <tr>
+                            <th>
+                            <td th:text="${scheduleInfo}"></td>
+                            </th>
+                        </tr>
+                        <!--tr th:each="schedule : ${scheduleInfo.scheduleList}">
+                            <th:block th:if="${schedule.fromDate eq scheduleInfo.selectDate}">
                                 <td th:text="${schedule.titleName}"></td>
                             </th:block>
-                        </tr>
+                        </tr -->
                     </tbody>
                 </table>
+
             </div>
         </div>
     </div>

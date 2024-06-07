@@ -15,11 +15,11 @@ function back_month() {
     var month = (showDate.getMonth() + 1).toString().padStart(2, '0');
     var day = showDate.getDate().toString().padStart(2, '0');
     $.ajax({
-        url: "/calendarDisplay/select",
+        url: "/calendarDisplay",
         type: 'GET',
         timeout: 60000,
         data: {
-            targetDate: year + month + day
+            switchCalendar: year + month + day
         },
         dataType: 'text'
     })
@@ -33,11 +33,11 @@ function next_month() {
     var month = (showDate.getMonth() + 1).toString().padStart(2, '0');
     var day = showDate.getDate().toString().padStart(2, '0');
     $.ajax({
-        url: "/calendarDisplay/select",
+        url: "/calendarDisplay",
         type: 'GET',
         timeout: 60000,
         data: {
-            targetDate: year + month + day
+            switchCalendar: year + month + day
         },
         dataType: 'text'
     })
@@ -55,11 +55,11 @@ function selectMonthChange() {
     var month = (showDate.getMonth() + 1).toString().padStart(2, '0');
     var day = showDate.getDate().toString().padStart(2, '0');
     $.ajax({
-        url: "/calendarDisplay/select",
+        url: "/calendarDisplay",
         type: 'GET',
         timeout: 60000,
         data: {
-            targetDate: year + month + day
+            switchCalendar: year + month + day
         },
         dataType: 'text'
     })
@@ -76,11 +76,11 @@ function selectYearChange() {
     var month = (showDate.getMonth() + 1).toString().padStart(2, '0');
     var day = showDate.getDate().toString().padStart(2, '0');
     $.ajax({
-        url: "/calendarDisplay/select",
+        url: "/calendarDisplay",
         type: 'GET',
         timeout: 60000,
         data: {
-            targetDate: year + month + day
+            switchCalendar: year + month + day
         },
         dataType: 'text'
     })
@@ -138,25 +138,28 @@ function createProcess(year, month) {
             } else {
                 // 当月の日付を曜日に照らし合わせて設定
                 count++;
-                // $.ajax({
-                //     url: "/calendarDisplay/selectDay",
-                //     type: 'GET',
-                //     timeout: 60000,
-                //     data: {
-                //         day: count
-                //     },
-                //     dataType: 'text'
-                // })
-                // calendar += "<form th:action='@{/calendarDisplay/selectDay}' method='get'>";
-                // calendar += "<td>" + count + "</td>";
-                // calendar += "<input type='hidden' name='day' th:value=" + count + "></form>";
-                calendar += "<form th:action='@{/calendarDisplay/selectDay}' method='get'><td>" + count + "</td><input type='hidden' name='day' th:value=" + count + "></form>";
-
+                calendar += "<td class='click_day' onclick='click_day(" + count + ")'>" + count + "</td>";
             }
         }
         calendar += "</tr>";
     }
     return calendar += "</tbody></table>";
+}
+
+// 日付クリック
+function click_day(num) {
+    var year = showDate.getFullYear().toString().padStart(4, '0');
+    var month = (showDate.getMonth() + 1).toString().padStart(2, '0');
+    var day = ('00' + num).slice(-2);
+    $.ajax({
+        url: "/calendarDisplay",
+        type: 'GET',
+        timeout: 60000,
+        data: {
+            selectDate: year + month + day
+        },
+        dataType: 'text'
+    });
 }
 
 function selectMonth(month) {
