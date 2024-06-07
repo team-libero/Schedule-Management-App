@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.act.libero.dto.ScheduleEditInfo;
-import com.act.libero.dto.SessionInfo;
 import com.act.libero.entity.ScheduleEdit;
 import com.act.libero.service.ScheduleEditService;
 import com.act.libero.util.ScheduleEditConst;
@@ -21,9 +20,6 @@ public class ScheduleEditController {
 
 	@Autowired
 	ScheduleEditService scheduleEditService;
-
-	@Autowired
-    protected SessionInfo sessionInfo;
 
 	@RequestMapping("/scheduleEdit")
 	public String scheduleEdit(Model model, @RequestParam(name = "scheduleId", required = false) Integer scheduleId,
@@ -47,7 +43,7 @@ public class ScheduleEditController {
 	@RequestMapping("/scheduleEdit/register")
 	public String scheduleRegister(@ModelAttribute ScheduleEdit scheduleEdit, Model model, RedirectAttributes redirectAttributes, HttpSession session,
 	@RequestParam(name = "announce", required = false) Integer announceFlg) {
-		String flg = scheduleEditService.register(scheduleEdit, session, sessionInfo);
+		String flg = scheduleEditService.register(scheduleEdit, session);
 
 		model.addAttribute("scheduleId", scheduleEdit.getScheduleId());
 		// 編集の場合
@@ -59,7 +55,7 @@ public class ScheduleEditController {
 			if (flg.equals(ScheduleEditConst.EDIT_SUCCSESS) && announceFlg != null) {
 				// 編集が成功した場合、LINE通知処理を行う
 				String notifyErr = scheduleEditService.lineNotify(scheduleEdit);
-				if(notifyErr.equals("tokenError")){
+				if(notifyErr != null && !notifyErr.isEmpty() && notifyErr.equals("tokenError")){
 					model.addAttribute("errMsg", "LINE通知されませんでした。詳細は管理者にお問い合わせください。");
 				}
 			}
@@ -75,7 +71,7 @@ public class ScheduleEditController {
 		if(flg.equals(ScheduleEditConst.REGIST_SUCCSESS) && announceFlg != null){
 			// 登録が成功した場合、LINE通知処理を行う
 			String notifyErr = scheduleEditService.lineNotify(scheduleEdit);
-			if(notifyErr.equals("tokenError")){
+			if(notifyErr != null && !notifyErr.isEmpty() && notifyErr.equals("tokenError")){
 				model.addAttribute("errMsg", "LINE通知されませんでした。詳細は管理者にお問い合わせください。");
 			}
 		}

@@ -40,17 +40,12 @@ public class ScheduleDetailController {
     // Service呼び出し
     ScheduleInfo output = scheduleDetailService.selectSchedule(scheduleId, session);
 
-    // ユーザー権限の確認
-    int sessionAuth = sessionInfo.getAuthorityNo();
-
     if (output == null) {
       redirectAttributes.addAttribute("scheduleYMD", scheduleYMD);
       redirectAttributes.addAttribute("calendarType", calendarType);
       model.addAttribute("errMsg", "対象のスケジュールがすでに削除されたか更新されています。");
       return "redirect:/calendarDisplay";
     }
-
-    output.setAuth(sessionAuth);
     model.addAttribute("scheduleInfo", output);
     return "scheduleDetail";
   }
