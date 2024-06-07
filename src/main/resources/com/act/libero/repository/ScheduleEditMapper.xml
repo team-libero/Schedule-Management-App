@@ -4,7 +4,23 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.act.libero.repository.ScheduleEditMapper">
 
-    <select id="getScheduleInfo" resultType="com.act.libero.entity.ScheduleEdit">
+<resultMap id="ScheduleEditResultMap" type="com.act.libero.entity.ScheduleEdit">
+    <id property="scheduleId" column="schedule_id"/>
+    <result property="groupId" column="users_group_id"/>
+    <result property="userId" column="user_id"/>
+    <result property="titleName" column="title_name"/>
+    <result property="fromDateTime" column="from_date_time"/>
+    <result property="toDateTime" column="to_date_time"/>
+    <result property="address" column="address"/>
+    <result property="memo" column="memo"/>
+    <result property="announceFlag" column="announce_flag"/>
+    <result property="createdUserId" column="created_user_id"/>
+    <result property="createdAt" column="created_at"/>
+    <result property="updatedUserId" column="updated_user_id"/>
+    <result property="updatedAt" column="updated_at"/>
+</resultMap>
+
+    <select id="getScheduleInfo" resultMap="ScheduleEditResultMap">
         SELECT *
         FROM schedule
         WHERE schedule_id = #{scheduleId}
