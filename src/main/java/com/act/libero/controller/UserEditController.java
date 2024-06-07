@@ -55,9 +55,11 @@ public class UserEditController {
   @GetMapping(value = "/userEdit")
     public String initUserEdit(@ModelAttribute UserEditInfo userEditInfo, Model model) {
 
-    String userId = sessionInfo.getUserId();
+    //String userId = sessionInfo.getUserId();
     // デバッグコード
     // String userId = "abcde54321";
+
+    String userId = (String)model.getAttribute("userId");
 
     User user = userEditService.selectUser(userId);
 		model.addAttribute("userInfo", user);

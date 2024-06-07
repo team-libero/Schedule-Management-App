@@ -11,12 +11,12 @@
 <script th:src="@{/js/userSelect.js}"></script> 
 
 <body>
-    <form method="post" id="form">
+    <form th:action="@{/editUserSelect}" th:object="${UserSelectInfo}" method="post" id="form">
     <div id="title">ユーザ編集（ユーザ選択）</div>
     <table id="userRegister">
         <tr>
             <td id="register-left">グループ</td>
-            <td id="register-right">リベロ</td>
+            <td id="register-right" th:text="${userSelect.getUsersGroupName()}"></td>
         </tr>
     </table>
     <input type="button" id="register" value="新規登録" style="margin-bottom: 2vw;">
@@ -26,31 +26,19 @@
             <th id="head-center">ユーザーID</th>
             <th id="head-right">氏名</th>
         </tr>
-        <tr id="userSelectTableContent">
-            <td id="table-left"><input type="radio" name="radio"></td>
-            <td id="table-center">taro1</td>
-            <td id="table-right">山田　太郎</td>
-        </tr>
-        <tr id="userSelectTableContent">
-            <td id="table-left"><input type="radio" name="radio"></td>
-            <td id="table-center">hanakoT</td>
-            <td id="table-right">田中　花子</td>
-        </tr>
-        <tr id="userSelectTableContent">
-            <td id="table-left"><input type="radio" name="radio"></td>
-            <td id="table-center">ts08</td>
-            <td id="table-right">鈴木　たかし</td>
-        </tr>
-        <tr id="userSelectTableContent">
-            <td id="table-left"><input type="radio" name="radio"></td>
-            <td id="table-center">AlexY</td>
-            <td id="table-right">吉田　アレックス</td>
-        </tr>
+        <div th:each="member : ${userSelect.UserMember}">
+            <tr id="userSelectTableContent">
+                <td id="table-left"><input type="radio" name="radio" th:value="${member.userId}"></td>
+                <td id="table-center" th:text="${member.userId}"></td>
+                <td id="table-right" th:text="${member.lastName} + '　' +${member.firstName}"></td>
+            </tr>
+        </div>
     </table>
     <div class="form_box">
         <input type="button" name="editbtn" id="edit" value="編集">
         <input type="button" name="deletebtn" id="delete" value="削除">
     </div>
+    <input type="hidden" name="checkedRadioUserId" value="">
 </form>
 <div th:replace="common :: footer"></div>
 </body>

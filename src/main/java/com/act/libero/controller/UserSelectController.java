@@ -4,43 +4,73 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.act.libero.dto.SessionInfo;
 import com.act.libero.dto.UserSelectInfo;
 import com.act.libero.service.UserSelectService;
 
+import jakarta.servlet.http.HttpSession;
+
+/*
+ * ユーザ選択画面
+ */
 @Controller
 public class UserSelectController {
 
-    @Autowired
-    protected SessionInfo sessionInfo;
-
 	@Autowired
-    UserSelectService userSelectService;
+	UserSelectService userSelectService;
 
-	private static final int AUTHORITY_NO_KANRISHA = 0;
-	// private static final int AUTHORITY_NO_IPPAN = 1;
-	
-    @RequestMapping("/userSelect")
-	public String userSelect(@ModelAttribute UserSelectInfo userSelectInfo, Model model) {
+	// @Autowired
+	// protected SessionInfo sessionInfo;
 
-		// ユーザの権限が管理者の場合
-		if (sessionInfo.getAuthorityNo() == AUTHORITY_NO_KANRISHA) {
+	@RequestMapping("/userSelect")
+	public String userSelect(HttpSession session, @ModelAttribute UserSelectInfo userSelect, Model model) {
+		String groupId =  "1";//(String) session.getAttribute("groupId");
 
-			//ユーザーテーブルからデータ取得
-		// List<User> userList = userSelectService.selectUserList(sessionInfo.getUsersGroupId());
+		// List<UserSelectInfo> userSelectInfo
+		userSelect = userSelectService.selectGroupInfo(groupId);
+		// userSelect.setUsersGroupName(userSelectInfo.getUsersGroupName());
 
-			// ユーザ編集画面（ユーザ選択）を表示
-			return "userSelect";
+		model.addAttribute("userSelect", userSelect);
+		return "userSelect";
+	}
 
-		// ユーザの権限が一般の場合
-		} else {
-			// ユーザ編集画面へ遷移
-			return "forward:userEdit";
-		}
+	/**
+	 * ユーザ新規登録
+	 * 
+	 * @return
+	 */
+	public String register(HttpSession session) {
 
+		return "userSelect";
+	}
 
-		// return "userSelect";
+	/**
+	 * ユーザ編集
+	 * 
+	 * @return
+	 */
+	@PostMapping("/editUserSelect")
+	public String edit(@ModelAttribute UserSelectInfo userSelectInfo, RedirectAttributes redirectAttributes) {
+
+		// ユーザテーブルから情報を取得できなかった場合
+		redirectAttributes.addFlashAttribute("userId", userSelectInfo.getCheckedRadioUserId());
+
+		return "redirect:/userEdit";
+	}
+
+	/**
+	 * ユーザ削除
+	 * 
+	 * @return
+	 */
+	@RequestMapping("delete")
+	public String delete(@ModelAttribute UserSelectInfo userSelect, Model model, HttpSession session) {
+
+		String resultMessage = userSelectService.userDelete(session.getId() ,userSelect.getUserId(), userSelect.getUpdated_at());
+		model.addAttribute(resultMessage, resultMessage);
+		return "userSelect";
 	}
 }
