@@ -13,7 +13,10 @@ $(function () {
             // ユーザ未選択の場合
             alert("ユーザを選択してください。");
         } else {
-            $('#form').attr('action', '../html/userEdit.html');
+
+            // $("<input>",{type:"hidden", name:"checkedRadioUserId", value:radio}).appendTo("#form");
+            // $('#form').attr('action', '../html/userEdit.html');
+            $('input:hidden[name="checkedRadioUserId"]').val(radio);
             $('#form').submit();
         }
     })

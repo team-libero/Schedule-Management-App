@@ -7,7 +7,7 @@ import com.act.libero.repository.UserMapper;
 
 @Service
 public class UserService {
-    
+
     /**
      * ユーザー情報 Mapper
      */

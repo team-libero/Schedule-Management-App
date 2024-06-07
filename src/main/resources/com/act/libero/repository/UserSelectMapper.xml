@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.act.libero.repository.UserSelectMapper">
+    <resultMap id="groupInfoResultMap" type="com.act.libero.entity.UserSelect">
+        <result property="usersGroupName" column="users_group_name"/>
+        <result property="userId" column="user_id"/>
+        <result property="lastName" column="last_name"/>
+        <result property="firstName" column="first_name"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+    <resultMap id="presenceCheckResultMap" type="com.act.libero.entity.UserSelect">
+        <result property="userId" column="user_id"/>
+    </resultMap>
+
+    <!-- グループ情報取得 -->
+    <select id="selectGroupInfo" resultMap="groupInfoResultMap">
+        SELECT
+            users_group.users_group_name as users_group_name
+            ,users.user_id as user_id
+            ,users.last_name as last_name
+            ,users.first_name as first_name
+            ,users.updated_at as updated_at
+        FROM users_group
+        INNER JOIN
+            users
+        ON
+            users_group.users_group_id = users.users_group_id
+        wHERE
+            users_group.users_group_id = #{groupId}
+        AND users_group.delete_flag ='0'
+        AND users.delete_flag ='0'
+        ORDER BY
+            users.authority_no ASC
+            ,users.created_at ASC
+    </select>
+
+    <!-- ユーザ取得 -->
+    <select id="presenceCheck" resultMap="presenceCheckResultMap">
+        SELECT
+            user_id
+        FROM users
+        wHERE
+            user_id = #{userId}
+        AND delete_flag ='0'
+        AND updated_at = #{updatedAt}
+    </select>
+
+    <!-- 更新(削除)  resultType="com.act.libero.entity.UserSelect"-->
+    <!--
+    <update id="deleteUser" resultType="com.act.libero.entity.UserSelect">
+        UPDATE users
+        SET
+            delete_flag = '1'
+            ,delete_at = now()
+            ,updated_user_id = #{loginUserId}
+            ,updated_at = now()
+        wHERE
+            user_id = #{userId}
+        AND delete_flg = '0'
+        AND updated_at = #{updatedAt}
+    </update>
+    -->
+
+</mapper>

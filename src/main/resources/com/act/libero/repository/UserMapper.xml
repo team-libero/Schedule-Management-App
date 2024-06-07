@@ -4,9 +4,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.act.libero.repository.UserMapper">
 
-<!-- 検索 -->
+    <!-- ユーザ情報取得（ユーザーID） -->
     <select id="selectUser" resultType="com.act.libero.entity.User">
-        SELECT * FROM users WHERE user_id = #{userId}
+        SELECT 
+            user_id,
+            last_name,
+            first_name,
+            email,
+            password,
+            updated_at
+        FROM
+            users
+        WHERE
+            user_id = #{userId}
+            AND delete_flag = 0
     </select>
 
     <!-- ユーザ情報取得（ユーザーID,パスワード） -->
@@ -36,5 +47,119 @@
         WHERE
             user_id = #{userId}
     </update>
+
+     <!-- グループ情報取得 -->
+    <select id="selectUsersGroupInfo" resultType="com.act.libero.entity.User">
+        SELECT 
+            users_group.users_group_name
+            ,users.user_id
+            ,users.last_name
+            ,users.first_name
+        FROM
+            users_group
+        LEFT JOIN
+            users
+        ON
+            users_group.users_group_id = users.users_group_id
+        WHERE
+            users_group.users_group_id = 1
+            AND users_group.delete_flag = 0
+            AND users.delete_flag = 0
+        ORDER BY
+            users.authority_no ASC
+            ,users.created_at ASC
+           
+    </select>
+
+    <!-- 存在チェック -->
+    <select id="selectUserUpdatedAt" resultType="com.act.libero.entity.User">
+        SELECT 
+            user_id
+        FROM
+            users
+        WHERE
+            user_id = #{userId}
+            AND delete_flag = 0
+            AND updated_at = #{updatedAt}
+    </select>
+
+    <!-- 選択ユーザの削除 -->
+    <update id="deleteUserEditInfo" parameterType="com.act.libero.entity.User">
+        UPDATE
+            users
+        SET
+            delete_flag = 1
+            ,delete_at = CURRENT_TIMESTAMP
+        WHERE
+            user_id = #{userId}
+            AND delete_flag = 0
+    </update>
+
+    <!-- 排他制御の実施 -->
+    <select id="selectUserExclusionControl" resultType="com.act.libero.entity.User">
+        SELECT 
+            user_id
+        FROM
+            users
+        WHERE
+            delete_flag = 0
+            AND (user_id = #{userId} OR email = #{email})
+    </select>
+
+    <!-- 更新（ユーザー編集情報） -->
+    <update id="updateUserEditInfo" parameterType="com.act.libero.entity.User">
+        UPDATE
+            users
+        SET
+            last_name = #{sei}
+            ,first_name = #{mei}
+            ,authority_no = #{authorityNo}
+            ,email = #{address}
+            ,password = #{encryptedPassword}
+            ,last_login_at = CURRENT_TIMESTAMP
+            ,updated_user_id = #{updatedUserId}
+            ,updated_at = CURRENT_TIMESTAMP
+        WHERE
+            user_id = #{userId}
+            AND delete_flag = 0
+            AND updated_at = #{updatedAt}
+    </update>
+
+    <insert id="insertUser" parameterType="com.act.libero.entity.User">
+        INSERT INTO users
+        (
+            user_id
+            ,last_name
+            ,first_name
+            ,authority_no
+            ,users_group_id
+            ,email
+            ,password
+            ,last_login_at
+            ,delete_flag
+            ,deleted_at
+            ,created_user_id
+            ,created_at
+            ,updated_user_id
+            ,updated_at
+        )
+        VALUES
+        (
+            #{user.userId}
+            ,#{user.lastName}
+            ,#{user.firstName}
+            ,#{user.authorityNo}
+            ,#{user.usersGroupId}
+            ,#{user.email}
+            ,#{user.password}
+            ,#{user.lastLoginAt}
+            ,#{user.deleteFlag}
+            ,#{user.deletedAt}
+            ,#{user.createdUserId}
+            ,CURRENT_TIMESTAMP
+            ,#{user.updatedUserId}
+            ,CURRENT_TIMESTAMP
+        )
+    </insert>
 
 </mapper>

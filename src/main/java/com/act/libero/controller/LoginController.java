@@ -21,6 +21,8 @@ import com.act.libero.dto.SessionInfo;
 import com.act.libero.entity.User;
 import com.act.libero.service.LoginService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class LoginController {
 	@Autowired
@@ -47,7 +49,7 @@ public class LoginController {
 	 */
 	@PostMapping("/certification")
 	public String certification(@ModelAttribute LoginInfo loginInfo, RedirectAttributes redirectAttributes,
-			Model model) {
+			Model model, HttpSession session) {
 
 		// 入力情報の取得
 		String userId = loginInfo.getUserid();
@@ -92,6 +94,11 @@ public class LoginController {
 		sessionInfo.setFullName(user.getLastName() + user.getFirstName());
 		sessionInfo.setAuthorityNo(user.getAuthorityNo());
 		sessionInfo.setUsersGroupId(user.getUsersGroupId());
+
+		session.setAttribute("userId", user.getUserId());
+		session.setAttribute("fullName", user.getLastName() + user.getFirstName());
+		session.setAttribute("authorityNo", user.getAuthorityNo());
+		session.setAttribute("usersGroupId", user.getUsersGroupId());
 
 		// カレンダー種別を遷移先へ渡す
 		redirectAttributes.addFlashAttribute("calendarSBT", "0");
