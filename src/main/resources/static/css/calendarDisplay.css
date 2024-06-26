@@ -1,4 +1,4 @@
-html{
+html {
     height: 100%;
 }
 
@@ -94,8 +94,8 @@ body {
     float: right;
 }
 
-.table_contents{
-    display: none;
+.table_contents {
+    /*display: none;*/
     border-top: 2vw dashed green;
     height: 46vw;
 }
@@ -117,11 +117,11 @@ body {
     font-weight: bold;
 }
 
-.table_contents_div table td a{
+.table_contents_div table td a {
     text-decoration: none;
     color: #853b00;
 }
 
 .table_contents_div table tr:nth-child(odd) {
     background-color: #eee
-}
+}	
