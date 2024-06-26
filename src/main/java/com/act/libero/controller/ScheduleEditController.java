@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.act.libero.dto.ScheduleEditInfo;
+import com.act.libero.dto.SessionInfo;
 import com.act.libero.entity.ScheduleEdit;
 import com.act.libero.service.ScheduleEditService;
 import com.act.libero.util.ScheduleEditConst;
@@ -20,6 +21,9 @@ public class ScheduleEditController {
 
 	@Autowired
 	ScheduleEditService scheduleEditService;
+
+	@Autowired
+    protected SessionInfo sessionInfo;
 
 	@RequestMapping("/scheduleEdit")
 	public String scheduleEdit(Model model, @RequestParam(name = "scheduleId", required = false) Integer scheduleId,
@@ -43,7 +47,7 @@ public class ScheduleEditController {
 	@RequestMapping("/scheduleEdit/register")
 	public String scheduleRegister(@ModelAttribute ScheduleEdit scheduleEdit, Model model, RedirectAttributes redirectAttributes, HttpSession session,
 	@RequestParam(name = "announce", required = false) Integer announceFlg) {
-		String flg = scheduleEditService.register(scheduleEdit, session);
+		String flg = scheduleEditService.register(scheduleEdit, session, sessionInfo);
 
 		model.addAttribute("scheduleId", scheduleEdit.getScheduleId());
 		// 編集の場合
