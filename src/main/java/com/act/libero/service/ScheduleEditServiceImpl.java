@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -130,7 +131,8 @@ public class ScheduleEditServiceImpl implements ScheduleEditService {
         ScheduleEditInfo items = new ScheduleEditInfo();
         String fromDateStr = se.getFromDateTime();
         String toDateStr = se.getToDateTime();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        formatter.setTimeZone(TimeZone.getTimeZone("Asia/Tokyo"));
         Date fromDates = new Date();
         Date toDates = new Date();
         try {
